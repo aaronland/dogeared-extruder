@@ -7,7 +7,7 @@ text extraction libraries using the `dropwizard` framework. Ideally the `readbil
 It only sort of works at the moment. I am not a Java person so I am still trying to fumble my
 way around this foreign land.
 
-	$> cd dropwizard-extractor
+	$> cd dropwizard-extruder
 	$> make exec
 	mvn compile exec:java
 	...
