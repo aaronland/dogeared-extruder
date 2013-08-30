@@ -17,6 +17,8 @@ import org.slf4j.LoggerFactory;
 import de.l3s.boilerpipe.extractors.DefaultExtractor;
 import de.l3s.boilerpipe.extractors.ArticleExtractor;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 @Path(value = "/boilerpipe")
 @Produces(MediaType.TEXT_PLAIN)
 public class BoilerpipeResource {
@@ -40,10 +42,11 @@ public class BoilerpipeResource {
             return Response.status(Response.Status.NOT_ACCEPTABLE).build();
 	}
 
-	// http://code.google.com/p/boilerpipe/wiki/Components
-
 	try {
 	    text = ArticleExtractor.INSTANCE.getText(url);
+	    // text = text2html(text);
+	    // String html = text2html(text);
+	    // LOGGER.info(html);
 	}
 
 	catch (Exception e){
@@ -52,6 +55,21 @@ public class BoilerpipeResource {
 	}
 
 	return Response.status(Response.Status.OK).entity(text).build();
+    }
+
+    private String text2html(String text){
+
+	String html = "";
+	String[] paras = text.split("[\n\r]+");
+
+	Integer count = paras.length;
+	LOGGER.info(count + " paras");
+	
+	for (String p : paras){
+	    html = html + "<p>" + StringEscapeUtils.escapeXml(p) + "</p>";
+	}
+
+	return html;
     }
 
 }
