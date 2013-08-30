@@ -17,3 +17,4 @@ See also
 --
 
 * https://github.com/basis-technology-corp/Java-readability
+* https://github.com/karussell/snacktory
