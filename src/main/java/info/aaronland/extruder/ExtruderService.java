@@ -5,7 +5,7 @@ import com.yammer.dropwizard.config.Bootstrap;
 import com.yammer.dropwizard.config.Environment;
 
 import info.aaronland.extruder.ExtruderConfiguration;
-import info.aaronland.extruder.ExtruderResource;
+import info.aaronland.extruder.BoilerpipeResource;
 
 public class ExtruderService extends Service<ExtruderConfiguration> {
 
@@ -20,8 +20,8 @@ public class ExtruderService extends Service<ExtruderConfiguration> {
 
     @Override
 	public void run(ExtruderConfiguration conf, Environment env) throws Exception {
-
-        env.addResource(new ExtruderResource());
+        env.addResource(new BoilerpipeResource());
+        env.addResource(new TikaResource());
     }
 
 }

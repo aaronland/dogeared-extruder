@@ -14,15 +14,11 @@ import java.net.URL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-// import de.l3s.boilerpipe.BoilerpipeExtractor;
-import de.l3s.boilerpipe.extractors.DefaultExtractor;
-import de.l3s.boilerpipe.extractors.ArticleExtractor;
-
-@Path(value = "/extrude")
+@Path(value = "/tika")
 @Produces(MediaType.TEXT_PLAIN)
-public class ExtruderResource {
+public class TikaResource {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ExtruderResource.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TikaResource.class);
 
     @GET
     public Response extrudeThis(@QueryParam("link") String link){
@@ -41,14 +37,17 @@ public class ExtruderResource {
             return Response.status(Response.Status.NOT_ACCEPTABLE).build();
 	}
 
+	
+	/*
 	try {
-	    text = DefaultExtractor.INSTANCE.getText(url);
+
 	}
 
 	catch (Exception e){
 	    LOGGER.error(e.toString());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 	}
+	*/
 
 	return Response.status(Response.Status.OK).entity(text).build();
     }
