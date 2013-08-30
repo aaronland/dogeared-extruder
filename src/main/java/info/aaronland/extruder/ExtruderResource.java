@@ -14,9 +14,9 @@ import java.net.URL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.l3s.boilerpipe.BoilerpipeExtractor;
-import de.l3s.boilerpipe.extractors.CommonExtractors;
-import de.l3s.boilerpipe.sax.HTMLHighlighter;
+// import de.l3s.boilerpipe.BoilerpipeExtractor;
+import de.l3s.boilerpipe.extractors.DefaultExtractor;
+import de.l3s.boilerpipe.extractors.ArticleExtractor;
 
 @Path(value = "/extrude")
 @Produces(MediaType.TEXT_PLAIN)
@@ -24,40 +24,33 @@ public class ExtruderResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExtruderResource.class);
 
-    /*
-    final BoilerpipeExtractor extractor = CommonExtractors.ARTICLE_EXTRACTOR;
-    
-    final boolean includeImages = true;
-    final boolean bodyOnly = false;
-    final HTMLHighlighter hh = HTMLHighlighter.newExtractingInstance(includeImages, bodyOnly);
-    */
-
     @GET
     public Response extrudeThis(@QueryParam("link") String link){
 
 	LOGGER.info("GET ME " + link);
 
 	URL url = null;
+	String text = null;
 
 	try {
 	    url = new URL(link);
 	}
 	
 	catch (Exception e){
+	    LOGGER.error(e.toString());
             return Response.status(Response.Status.NOT_ACCEPTABLE).build();
 	}
 
-	/*
 	try {
-	    String extractedHtml = hh.process(url, extractor);
+	    text = DefaultExtractor.INSTANCE.getText(url);
 	}
 
 	catch (Exception e){
+	    LOGGER.error(e.toString());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 	}
-	*/
 
-	return Response.status(Response.Status.OK).entity(url.toString()).build();
+	return Response.status(Response.Status.OK).entity(text).build();
     }
 
 }
