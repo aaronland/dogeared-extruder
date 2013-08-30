@@ -20,7 +20,7 @@ import de.l3s.boilerpipe.extractors.ArticleExtractor;
 import org.apache.commons.lang3.StringEscapeUtils;
 
 @Path(value = "/boilerpipe")
-@Produces(MediaType.TEXT_PLAIN)
+@Produces(MediaType.TEXT_HTML)
 public class BoilerpipeResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BoilerpipeResource.class);
@@ -44,9 +44,7 @@ public class BoilerpipeResource {
 
 	try {
 	    text = ArticleExtractor.INSTANCE.getText(url);
-	    // text = text2html(text);
-	    // String html = text2html(text);
-	    // LOGGER.info(html);
+	    text = text2html(text);
 	}
 
 	catch (Exception e){
@@ -60,7 +58,7 @@ public class BoilerpipeResource {
     private String text2html(String text){
 
 	String html = "";
-	String[] paras = text.split("[\n\r]+");
+	String[] paras = text.split("[\n\n]+");
 
 	Integer count = paras.length;
 	LOGGER.info(count + " paras");
