@@ -15,6 +15,8 @@ way around this foreign land.
 	INFO  [2013-08-30 12:49:12,189] org.eclipse.jetty.server.AbstractConnector: Started SocketConnector@0.0.0.0:8081
   
 	$> curl 'http://localhost:8080/boilerpipe?url=SOME_URL'
+
+	$> curl 'http://localhost:8080/tika?url=SOME_URL_DOT_PDF'
   
 Open questions
 --
