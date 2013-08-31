@@ -14,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import java.net.URL;
 
 import com.basistech.readability.Readability;
+import com.basistech.readability.HttpPageReader;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,20 +36,22 @@ public class JavaReadabilityResource {
 	}
 	
 	catch (Exception e){
-	    LOGGER.error(e.toString());
+	    LOGGER.error("URL ERROR " + e.toString());
             return Response.status(Response.Status.NOT_ACCEPTABLE).build();
 	}
 
 	try {
 
 	    Readability parser = new Readability();
+	    HttpPageReader reader = new HttpPageReader();
+
+	    parser.setPageReader(reader);
 	    parser.processDocument(link);
 
-	    /*
+	    text = parser.getArticleText();
+
 	    TextUtils utils = new TextUtils();
-	    text = utils.unwrap(text);
 	    text = utils.text2html(text);
-	    */
 	}
 
 	catch (Exception e){

@@ -34,6 +34,10 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+// For debugging (below)
+// import org.apache.http.protocol.HTTP;
+// import org.apache.http.Header;
+
 /**
  *
  */
@@ -65,7 +69,20 @@ public class HttpPageReader extends AbstractPageReader implements PageReader {
                     LOG.error("Download failed of " + url + " status " + resp + " " + httpResponse.getStatusLine().getReasonPhrase());
                     return null;
                 }
+
                 String respCharset = EntityUtils.getContentCharSet(httpResponse.getEntity());
+
+		// I did this - it is not ideal but it will do for now. See also:
+		// Header contentType = httpResponse.getFirstHeader("Content-Type");
+		// String charset= contentType.getValue();
+		// LOG.info("CHARSET IS " + charset);
+		// LOG.info("DEFAULT IS " + HTTP.DEFAULT_CONTENT_CHARSET);
+		// (20130831/straup)
+
+		if (respCharset == null){
+		    respCharset = "UTF-8";
+		}
+
                 return readContent(httpResponse.getEntity().getContent(), respCharset);
             } finally {
                 if (response != null) {
