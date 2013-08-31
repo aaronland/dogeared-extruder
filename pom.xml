@@ -23,7 +23,9 @@
       <dependency>
         <groupId>com.sun.jersey.contribs</groupId>
         <artifactId>jersey-multipart</artifactId>
-        <version>1.8</version>
+	<!-- this is important and needs to be in sync with the jersey defined in -->
+	<!-- https://github.com/codahale/dropwizard/blob/master/pom.xml -->
+        <version>1.17.1</version>
       </dependency>   
 
       <!-- boilerpipe stuff -->

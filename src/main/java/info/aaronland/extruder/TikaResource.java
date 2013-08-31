@@ -2,27 +2,30 @@ package info.aaronland.extruder;
 
 import info.aaronland.extruder.TextUtils;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.Produces;
+import java.io.InputStream;
+import java.io.BufferedInputStream;
 
-import javax.ws.rs.POST;
-import javax.ws.rs.Consumes;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.QueryParam;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
+
+import javax.ws.rs.core.MediaType;
+
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-import javax.ws.rs.core.MediaType;
 
 import java.net.URL;
 import java.net.URLConnection;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.BufferedInputStream;
 
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.Metadata;
@@ -38,16 +41,8 @@ public class TikaResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TikaResource.class);
 
-    /*
-    @POST
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response extrudeThat(@FormDataParam("file") final BufferedInputStream stream){
-	return Response.status(Response.Status.OK).entity("OH HAI").build();
-    }
-    */
-
     @GET
-    public Response extrudeThis(@QueryParam("link") String link){
+    public Response extrudeThisUrl(@QueryParam("link") String link){
 
 	URL url = null;
 	String text = null;
@@ -74,27 +69,8 @@ public class TikaResource {
 	}
 	
 	try {
-
-	    // https://gist.github.com/kinjouj/2507727
-
-	    // TO DO: figure out how to make this return HTML instead of text
-	    // (20130831/straup)
-
-	    Parser parser = new AutoDetectParser();
-	    ContentHandler handler = new BodyContentHandler();
-	    
-	    Metadata metadata = new Metadata();
- 
-	    parser.parse(buffer, handler, metadata, new ParseContext());
-
-	    text = handler.toString();
-
-	    // I suppose there is a way to do this without creating an
-	    // object first?
-
-	    TextUtils utils = new TextUtils();
-	    text = utils.unwrap(text);
-	    text = utils.text2html(text);
+	    text = extrudeThis(buffer);
+	    text = massageText(text);
 	}
 
 	catch (Exception e){
@@ -105,4 +81,39 @@ public class TikaResource {
 	return Response.status(Response.Status.OK).entity(text).build();
     }
 
+    @POST
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response extrudeThisFile(@FormDataParam("file") InputStream file){
+	return Response.status(Response.Status.OK).entity("OH HAI").build();
+    }
+
+    private String extrudeThis(BufferedInputStream buffer){
+	
+	// https://gist.github.com/kinjouj/2507727
+
+	// TO DO: figure out how to make this return HTML instead of text
+	// (20130831/straup)
+	
+	Parser parser = new AutoDetectParser();
+	ContentHandler handler = new BodyContentHandler();
+	    
+	Metadata metadata = new Metadata();
+
+	try {
+	    parser.parse(buffer, handler, metadata, new ParseContext());
+	}
+
+	catch (Exception e){
+	    throw new RuntimeException(e);
+	}
+
+	return handler.toString();
+    }
+
+    private String massageText(String text){
+	TextUtils utils = new TextUtils();
+	text = utils.unwrap(text);
+	text = utils.text2html(text);
+	return text;
+    }
 }
