@@ -7,6 +7,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.Produces;
 
+import javax.ws.rs.POST;
+import javax.ws.rs.Consumes;
+import com.sun.jersey.core.header.FormDataContentDisposition;
+import com.sun.jersey.multipart.FormDataParam;
+
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.MediaType;
@@ -32,6 +37,14 @@ import org.xml.sax.ContentHandler;
 public class TikaResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TikaResource.class);
+
+    /*
+    @POST
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response extrudeThat(@FormDataParam("file") final BufferedInputStream stream){
+	return Response.status(Response.Status.OK).entity("OH HAI").build();
+    }
+    */
 
     @GET
     public Response extrudeThis(@QueryParam("link") String link){
