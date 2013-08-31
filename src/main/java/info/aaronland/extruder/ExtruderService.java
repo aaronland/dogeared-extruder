@@ -22,6 +22,7 @@ public class ExtruderService extends Service<ExtruderConfiguration> {
 	public void run(ExtruderConfiguration conf, Environment env) throws Exception {
         env.addResource(new BoilerpipeResource());
         env.addResource(new TikaResource());
+        env.addResource(new JavaReadabilityResource());
     }
 
 }
