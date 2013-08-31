@@ -64,6 +64,9 @@ public class TikaResource {
 
 	    // https://gist.github.com/kinjouj/2507727
 
+	    // TO DO: figure out how to make this return HTML instead of text
+	    // (20130831/straup)
+
 	    Parser parser = new AutoDetectParser();
 	    ContentHandler handler = new BodyContentHandler();
 	    
