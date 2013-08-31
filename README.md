@@ -24,7 +24,7 @@ to fumble my way around this foreign land.
 Notes
 --
 
-* There is also a separate branch that uses the `snacktory` readability clone
+* There is also a [separate branch](https://github.com/straup/dropwizard-extruder/tree/snacktory) that uses the `snacktory` readability clone
 but it has not been merged in to master yet.
 
 Open questions
