@@ -1,5 +1,7 @@
 package info.aaronland.extruder;
 
+import info.aaronland.extruder.TextUtils;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
@@ -26,7 +28,7 @@ import org.apache.tika.sax.BodyContentHandler;
 import org.xml.sax.ContentHandler;
 
 @Path(value = "/tika")
-@Produces(MediaType.TEXT_PLAIN)
+@Produces(MediaType.TEXT_HTML)
 public class TikaResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TikaResource.class);
@@ -62,12 +64,23 @@ public class TikaResource {
 	
 	try {
 
+	    // https://gist.github.com/kinjouj/2507727
+
 	    Parser parser = new AutoDetectParser();
-	    ContentHandler handler = new BodyContentHandler(System.out);
+	    ContentHandler handler = new BodyContentHandler();
 	    
 	    Metadata metadata = new Metadata();
  
 	    parser.parse(buffer, handler, metadata, new ParseContext());
+
+	    text = handler.toString();
+
+	    // I suppose there is a way to do this without creating an
+	    // object first?
+
+	    TextUtils utils = new TextUtils();
+	    text = utils.unwrap(text);
+	    text = utils.text2html(text);
 	}
 
 	catch (Exception e){

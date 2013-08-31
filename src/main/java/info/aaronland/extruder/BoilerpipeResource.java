@@ -1,5 +1,7 @@
 package info.aaronland.extruder;
 
+import info.aaronland.extruder.TextUtils;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
@@ -16,8 +18,6 @@ import org.slf4j.LoggerFactory;
 
 import de.l3s.boilerpipe.extractors.DefaultExtractor;
 import de.l3s.boilerpipe.extractors.ArticleExtractor;
-
-import org.apache.commons.lang3.StringEscapeUtils;
 
 @Path(value = "/boilerpipe")
 @Produces(MediaType.TEXT_HTML)
@@ -44,7 +44,10 @@ public class BoilerpipeResource {
 
 	try {
 	    text = ArticleExtractor.INSTANCE.getText(url);
-	    text = text2html(text);
+
+	    TextUtils utils = new TextUtils();
+	    //text = utils.unwrap(text);
+	    text = utils.text2html(text);
 	}
 
 	catch (Exception e){
@@ -53,21 +56,6 @@ public class BoilerpipeResource {
 	}
 
 	return Response.status(Response.Status.OK).entity(text).build();
-    }
-
-    private String text2html(String text){
-
-	String html = "";
-	String[] paras = text.split("[\n\n]+");
-
-	Integer count = paras.length;
-	LOGGER.info(count + " paras");
-	
-	for (String p : paras){
-	    html = html + "<p>" + StringEscapeUtils.escapeXml(p) + "</p>";
-	}
-
-	return html;
     }
 
 }
