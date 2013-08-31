@@ -28,15 +28,13 @@ import org.apache.tika.sax.BodyContentHandler;
 import org.xml.sax.ContentHandler;
 
 @Path(value = "/tika")
-@Produces(MediaType.TEXT_HTML)
+@Produces("text/html; charset=UTF-8")
 public class TikaResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TikaResource.class);
 
     @GET
     public Response extrudeThis(@QueryParam("link") String link){
-
-	LOGGER.info("GET ME " + link);
 
 	URL url = null;
 	String text = null;

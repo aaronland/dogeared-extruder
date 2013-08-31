@@ -20,15 +20,13 @@ import de.l3s.boilerpipe.extractors.DefaultExtractor;
 import de.l3s.boilerpipe.extractors.ArticleExtractor;
 
 @Path(value = "/boilerpipe")
-@Produces(MediaType.TEXT_HTML)
+@Produces("text/html; charset=UTF-8")
 public class BoilerpipeResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BoilerpipeResource.class);
 
     @GET
     public Response extrudeThis(@QueryParam("link") String link){
-
-	LOGGER.info("GET ME " + link);
 
 	URL url = null;
 	String text = null;
