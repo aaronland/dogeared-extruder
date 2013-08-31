@@ -80,6 +80,7 @@ public class HttpPageReader extends AbstractPageReader implements PageReader {
 		// (20130831/straup)
 
 		if (respCharset == null){
+		    LOG.warn("I HAVE NO IDEA WHAT THE CHARACTER SET IS, ASSUMING UTF-8 BECAUSE THE PRESENT");
 		    respCharset = "UTF-8";
 		}
 
