@@ -1,11 +1,12 @@
 dropwizard-extruder
 ==
 
-This is a meant to be a simple HTTP Pony to wrap the `boilerpipe` and `Tika`
-text extraction libraries using the `dropwizard` framework. Ideally the `readbility` algorithm too.
+This is a meant to be a simple HTTP Pony to wrap the `boilerpipe` and `Tika` and
+clones of the `readability` text extraction libraries using the `dropwizard`
+framework.
 
-It only sort of works at the moment. I am not a Java person so I am still trying to fumble my
-way around this foreign land.
+It only sort of works at the moment. I am not a Java person so I am still trying
+to fumble my way around this foreign land.
 
 	$> cd dropwizard-extruder
 	$> make exec
@@ -16,8 +17,16 @@ way around this foreign land.
   
 	$> curl 'http://localhost:8080/boilerpipe?url=SOME_URL'
 
+	$> curl 'http://localhost:8080/java-readability?url=SOME_URL'
+
 	$> curl 'http://localhost:8080/tika?url=SOME_URL_DOT_PDF'
   
+Notes
+--
+
+* There is also a separate branch that uses the `snacktory` readability clone
+but it has not been merged in to master yet.
+
 Open questions
 --
 
@@ -30,5 +39,7 @@ Should this:
 See also
 --
 
+* http://code.google.com/p/boilerpipe/
+* https://tika.apache.org/
 * https://github.com/basis-technology-corp/Java-readability
 * https://github.com/karussell/snacktory
