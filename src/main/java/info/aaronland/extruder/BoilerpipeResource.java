@@ -45,8 +45,10 @@ public class BoilerpipeResource {
 	    text = massageText(text);
 	}
 
+	// TODO: trap MalformedURLExceptions and return NOT_ACCEPTABLE here (20130901/straup)
+
 	catch (Exception e){
-	    throw new RuntimeException(e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.toString()).build();
 	}
 	
 	return Response.status(Response.Status.OK).entity(text).build();
@@ -70,7 +72,7 @@ public class BoilerpipeResource {
 
 	catch (Exception e){
 	    up_utils.deleteFile(file);
-	    throw new RuntimeException(e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.toString()).build();
 	}
 
 	up_utils.deleteFile(file);

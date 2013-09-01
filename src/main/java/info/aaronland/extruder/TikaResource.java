@@ -55,8 +55,7 @@ public class TikaResource {
 	}
 	
 	catch (Exception e){
-	    LOGGER.error(e.toString());
-            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+            return Response.status(Response.Status.NOT_ACCEPTABLE).entity(e.toString()).build();
 	}
 
 	BufferedInputStream buffer = null;
@@ -67,8 +66,7 @@ public class TikaResource {
 	}
 
 	catch (Exception e){
-	    LOGGER.error(e.toString());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.toString()).build();
 	}
 	
 	try {
@@ -77,8 +75,7 @@ public class TikaResource {
 	}
 
 	catch (Exception e){
-	    LOGGER.error(e.toString());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.toString()).build();
 	}
 
 	return Response.status(Response.Status.OK).entity(text).build();
@@ -112,9 +109,7 @@ public class TikaResource {
 	}
 
 	catch (Exception e){
-	    // throw new RuntimeException(e);
-	    LOGGER.error(e.toString());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.toString()).build();
 	}
 
 	String text = "";
@@ -125,9 +120,7 @@ public class TikaResource {
 	}
 
 	catch (Exception e){
-	    // throw new RuntimeException(e);
-	    LOGGER.error(e.toString());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.toString()).build();
 	}
 
 	return Response.status(Response.Status.OK).entity(text).build();

@@ -46,9 +46,10 @@ public class JavaReadabilityResource {
 	    text = extrudeThis(uri);
 	}
 
+	// TODO: trap MalformedURLExceptions and return NOT_ACCEPTABLE here (20130901/straup)
+
 	catch (Exception e){
-	    LOGGER.error("URL ERROR " + e.toString());
-            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.toString()).build();
 	}
 
 	return Response.status(Response.Status.OK).entity(text).build();
@@ -73,7 +74,7 @@ public class JavaReadabilityResource {
 
 	catch (Exception e){
 	    up_utils.deleteFile(file);
-	    throw new RuntimeException(e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.toString()).build();
 	}
 
 	up_utils.deleteFile(file);
