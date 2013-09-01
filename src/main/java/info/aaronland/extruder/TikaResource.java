@@ -4,6 +4,8 @@ import info.aaronland.extruder.TextUtils;
 
 import java.io.InputStream;
 import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ByteArrayInputStream;
 
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
@@ -83,17 +85,58 @@ public class TikaResource {
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response extrudeThisFile(@FormDataParam("file") InputStream file){
-	return Response.status(Response.Status.OK).entity("OH HAI").build();
+    public Response extrudeThisFile(@FormDataParam("file") InputStream upload){
+
+	// MOON LANGUAGE – if there's a better way to make it so that
+	// Tika doesn't complain that the stream (upload) is already
+	// closed I would love to hear about it... (20130831/straup)
+
+	ByteArrayInputStream buffer = null;
+
+	try {
+
+	    ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+            int read = 0;
+            byte[] bytes = new byte[1024];
+
+            while ((read = upload.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+
+            out.flush();
+            out.close();
+
+	    buffer = new ByteArrayInputStream(out.toByteArray());
+	}
+
+	catch (Exception e){
+	    // throw new RuntimeException(e);
+	    LOGGER.error(e.toString());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+	}
+
+	String text = "";
+
+	try {
+	    text = extrudeThis(buffer);
+	    text = massageText(text);
+	}
+
+	catch (Exception e){
+	    // throw new RuntimeException(e);
+	    LOGGER.error(e.toString());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+	}
+
+	return Response.status(Response.Status.OK).entity(text).build();
     }
 
-    private String extrudeThis(BufferedInputStream buffer){
-	
-	// https://gist.github.com/kinjouj/2507727
+    // TO DO: figure out how to make this return HTML instead of text
+    // (20130831/straup)
 
-	// TO DO: figure out how to make this return HTML instead of text
-	// (20130831/straup)
-	
+    private String extrudeThis(InputStream buffer){
+		
 	Parser parser = new AutoDetectParser();
 	ContentHandler handler = new BodyContentHandler();
 	    
