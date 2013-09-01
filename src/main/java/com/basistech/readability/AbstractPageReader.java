@@ -49,15 +49,22 @@ public class AbstractPageReader {
             }
         }
         if (charsetDetector != null && !respectServerEncoding || charset == null) {
-            String charsetName = charsetDetector.detect(bytes, hint);
-            if (charsetName != null) {
-                try {
-                    charset = Charset.forName(charsetName);
-                    detectedEncoding = charset.name();
-                } catch (Exception e) {
-                    LOG.warn("Detected character set " + charsetName + " not supported");
-                }
-            }
+
+	    try {
+		String charsetName = charsetDetector.detect(bytes, hint);
+		if (charsetName != null) {
+		    try {
+			charset = Charset.forName(charsetName);
+			detectedEncoding = charset.name();
+		    } catch (Exception e) {
+			LOG.warn("Detected character set " + charsetName + " not supported");
+		    }
+		}
+	    }
+
+	    catch (Exception e){
+		LOG.warn("Failed to detect bytes " + e.toString());
+	    }
         }
         if (charset == null) {
             LOG.warn("Defaulting to utf-8");

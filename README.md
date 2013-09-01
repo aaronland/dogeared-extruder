@@ -20,12 +20,27 @@ to fumble my way around this foreign land.
 	$> curl 'http://localhost:8080/java-readability?url=SOME_URL'
 
 	$> curl 'http://localhost:8080/tika?url=SOME_URL_DOT_PDF'
+
+Also, local file uploads:
+
+	$> curl -v -X POST -F "file=SOME_FILE.html" http://localhost:8080/boilerpipe
+
+	$> curl -v -X POST -F "file=SOME_FILE.html" http://localhost:8080/java-readability
   
+	$> curl -v -X POST -F "file=SOME_FILE.pdf" http://localhost:8080/tika
+
 Notes
 --
 
-* There is also a [separate branch](https://github.com/straup/dropwizard-extruder/tree/snacktory) that uses the `snacktory` readability clone
-but it has not been merged in to master yet.
+* If you look carefully at the URLs above and the actual classes that define the
+  functionality they all look basically the same save for the names of the
+  extraction tools. For the time being I think the classes (and URLs) should
+  remain separate if only to keep things simple(r) while everything else is
+  sorted out.
+
+* There is also a [separate
+branch](https://github.com/straup/dropwizard-extruder/tree/snacktory) that uses
+the `snacktory` readability clone but it has not been merged in to master yet.
 
 Open questions
 --
