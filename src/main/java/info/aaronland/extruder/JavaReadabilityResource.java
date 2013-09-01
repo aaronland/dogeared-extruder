@@ -23,7 +23,10 @@ import java.io.File;
 import java.net.URL;
 
 import com.basistech.readability.Readability;
+
+// See below inre: Readers (20130901/straup)
 import com.basistech.readability.HttpPageReader;
+import com.basistech.readability.FilePageReader;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,9 +58,8 @@ public class JavaReadabilityResource {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response extrudeThisFile(@FormDataParam("file") InputStream upload){
 
-	throw new RuntimeException("Java-readability needs to be taught to love local files");
+	// throw new RuntimeException("Java-readability needs to be taught to love local files");
 
-	/*
 	UploadUtils up_utils = new UploadUtils();
 
 	File file = up_utils.inputStreamToTempFile(upload);
@@ -77,7 +79,6 @@ public class JavaReadabilityResource {
 	up_utils.deleteFile(file);
 
 	return Response.status(Response.Status.OK).entity(text).build();
-	*/
     }
 
     private String extrudeThis(String uri){
@@ -96,11 +97,24 @@ public class JavaReadabilityResource {
 	try {
 	    
 	    Readability parser = new Readability();
-	    HttpPageReader reader = new HttpPageReader();
+	    String path = url.toString();
 
-	    parser.setPageReader(reader);
-	    parser.processDocument(url.toString());
+	    // Basically I need to write a URIPageReader class to hide
+	    // all this nonsense because the HttpPageReader uses the Http
+	    // classes rather than java.net.URL (20130901/straup)
 
+	    if (path.startsWith("file:")){
+		path = path.replace("file:", "");
+		FilePageReader reader = new FilePageReader();
+		parser.setPageReader(reader);
+	    }
+
+	    else {
+		HttpPageReader reader = new HttpPageReader();
+		parser.setPageReader(reader);
+	    }
+
+	    parser.processDocument(path);
 	    text = parser.getArticleText();
 	}
 
