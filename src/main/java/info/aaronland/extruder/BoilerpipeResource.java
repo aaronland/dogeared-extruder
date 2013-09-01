@@ -36,12 +36,12 @@ public class BoilerpipeResource {
     private static final TextUtils utils = new TextUtils();
 
     @GET
-    public Response extrudeThisURL(@QueryParam("link") String uri){
+    public Response extrudeThisURL(@QueryParam("url") String url){
 
 	String text = "";
 
 	try {
-	    text = extrudeThis(uri);
+	    text = extrudeThis(url);
 	    text = massageText(text);
 	}
 

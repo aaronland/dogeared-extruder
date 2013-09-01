@@ -45,13 +45,13 @@ public class TikaResource {
     private static final TextUtils utils = new TextUtils();
 
     @GET
-    public Response extrudeThisUrl(@QueryParam("link") String link){
+    public Response extrudeThisUrl(@QueryParam("url") String uri){
 
 	URL url = null;
 	String text = null;
 
 	try {
-	    url = new URL(link);
+	    url = new URL(uri);
 	}
 	
 	catch (Exception e){

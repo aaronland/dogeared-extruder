@@ -38,12 +38,12 @@ public class JavaReadabilityResource {
     private static final Logger LOGGER = LoggerFactory.getLogger(JavaReadabilityResource.class);
 
     @GET
-    public Response extrudeThisURL(@QueryParam("link") String uri){
+    public Response extrudeThisURL(@QueryParam("url") String url){
 
 	String text = "";
 
 	try {
-	    text = extrudeThis(uri);
+	    text = extrudeThis(url);
 	}
 
 	// TODO: trap MalformedURLExceptions and return NOT_ACCEPTABLE here (20130901/straup)
