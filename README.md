@@ -20,7 +20,13 @@ to fumble my way around this foreign land.
 	$> curl 'http://localhost:8080/java-readability?url=SOME_URL'
 
 	$> curl 'http://localhost:8080/tika?url=SOME_URL_DOT_PDF'
+
+Also, local file uploads:
+
+	$> curl -v -X POST -F "file=SOME_FILE.html" http://localhost:8080/boilerpipe
   
+	$> curl -v -X POST -F "file=SOME_FILE.pdf" http://localhost:8080/tika
+
 Notes
 --
 
