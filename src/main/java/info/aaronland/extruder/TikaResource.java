@@ -42,6 +42,7 @@ import org.xml.sax.ContentHandler;
 public class TikaResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TikaResource.class);
+    private static final TextUtils utils = new TextUtils();
 
     @GET
     public Response extrudeThisUrl(@QueryParam("link") String link){
@@ -154,7 +155,6 @@ public class TikaResource {
     }
 
     private String massageText(String text){
-	TextUtils utils = new TextUtils();
 	text = utils.unwrap(text);
 	text = utils.text2html(text);
 	return text;
