@@ -5,8 +5,10 @@ This is a meant to be a simple HTTP Pony to wrap the `boilerpipe` and `Tika` and
 clones of the `readability` text extraction libraries using the `dropwizard`
 framework.
 
-It only sort of works at the moment. I am not a Java person so I am still trying
+It basically works at the moment but I am not a Java person so I am still trying
 to fumble my way around this foreign land.
+
+To start the server:
 
 	$> cd dropwizard-extruder
 	$> make exec
@@ -14,6 +16,8 @@ to fumble my way around this foreign land.
 	...
 	INFO  [2013-08-30 12:49:12,184] org.eclipse.jetty.server.AbstractConnector: Started InstrumentedBlockingChannelConnector@0.0.0.0:8080
 	INFO  [2013-08-30 12:49:12,189] org.eclipse.jetty.server.AbstractConnector: Started SocketConnector@0.0.0.0:8081
+
+And then you can pass it URLs as `GET` parameters:
   
 	$> curl 'http://localhost:8080/boilerpipe?url=SOME_URL'
 
@@ -21,13 +25,13 @@ to fumble my way around this foreign land.
 
 	$> curl 'http://localhost:8080/tika?url=SOME_URL_DOT_PDF'
 
-Also, local file uploads:
+It also supports local files uploads via `POST`:
 
-	$> curl -v -X POST -F "file=SOME_FILE.html" http://localhost:8080/boilerpipe
+	$> curl -X POST -F "file=SOME_FILE.html" http://localhost:8080/boilerpipe
 
-	$> curl -v -X POST -F "file=SOME_FILE.html" http://localhost:8080/java-readability
+	$> curl -X POST -F "file=SOME_FILE.html" http://localhost:8080/java-readability
   
-	$> curl -v -X POST -F "file=SOME_FILE.pdf" http://localhost:8080/tika
+	$> curl -X POST -F "file=SOME_FILE.pdf" http://localhost:8080/tika
 
 Notes
 --
