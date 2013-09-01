@@ -38,9 +38,17 @@ public class FilePageReader extends AbstractPageReader implements PageReader {
     @Override
     public String readPage(String url) throws PageReadException {
         int lastSlash = url.replace("\\", "/").lastIndexOf('/');
-        File testFile = new File(baseDirectory, url.substring(lastSlash + 1));
-        LOG.info("Reading " + testFile + " for " + url);
+	// DO NOT UNDERSTAND... (20130901/straup)
+        // File testFile = new File(baseDirectory, url.substring(lastSlash + 1));
+        // LOG.info("Reading " + testFile + " for " + url);
+
+        LOG.info("Reading " + url);
+
+        File testFile = new File(url);
         FileInputStream fis = null;
+
+	String charset = "UTF-8";
+
         try {
             try {
                 fis = new FileInputStream(testFile);

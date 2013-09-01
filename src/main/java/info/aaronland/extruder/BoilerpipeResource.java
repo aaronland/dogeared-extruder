@@ -1,11 +1,20 @@
 package info.aaronland.extruder;
 
 import info.aaronland.extruder.TextUtils;
+import info.aaronland.extruder.UploadUtils;
+
+import java.io.InputStream;
+import java.io.File;
+
+import com.sun.jersey.core.header.FormDataContentDisposition;
+import com.sun.jersey.multipart.FormDataParam;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.Consumes;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -24,36 +33,81 @@ import de.l3s.boilerpipe.extractors.ArticleExtractor;
 public class BoilerpipeResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BoilerpipeResource.class);
+    private static final TextUtils utils = new TextUtils();
 
     @GET
-    public Response extrudeThis(@QueryParam("link") String link){
+    public Response extrudeThisURL(@QueryParam("link") String uri){
 
-	URL url = null;
-	String text = null;
+	String text = "";
 
 	try {
-	    url = new URL(link);
+	    text = extrudeThis(uri);
+	    text = massageText(text);
+	}
+
+	// TODO: trap MalformedURLExceptions and return NOT_ACCEPTABLE here (20130901/straup)
+
+	catch (Exception e){
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.toString()).build();
 	}
 	
+	return Response.status(Response.Status.OK).entity(text).build();
+    }
+
+    @POST
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response extrudeThisFile(@FormDataParam("file") InputStream upload){
+
+	UploadUtils up_utils = new UploadUtils();
+
+	File file = up_utils.inputStreamToTempFile(upload);
+
+	String uri = "file://" + file.getAbsolutePath();
+	String text = "";
+
+	try {
+	    text = extrudeThis(uri);
+	    text = massageText(text);
+	}
+
 	catch (Exception e){
-	    LOGGER.error(e.toString());
-            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+	    up_utils.deleteFile(file);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.toString()).build();
+	}
+
+	up_utils.deleteFile(file);
+
+	return Response.status(Response.Status.OK).entity(text).build();
+    }
+
+    private String extrudeThis(String uri){
+
+	URL url = null;
+	String text = "";
+
+	try {
+	    url = new URL(uri);
+	}
+
+	catch (Exception e){
+	    throw new RuntimeException(e);
 	}
 
 	try {
 	    text = ArticleExtractor.INSTANCE.getText(url);
-
-	    TextUtils utils = new TextUtils();
-	    //text = utils.unwrap(text);
-	    text = utils.text2html(text);
 	}
 
 	catch (Exception e){
-	    LOGGER.error(e.toString());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+	    throw new RuntimeException(e);
 	}
 
-	return Response.status(Response.Status.OK).entity(text).build();
+	return text;
+    }
+
+    private String massageText(String text){
+	//text = utils.unwrap(text);
+	text = utils.text2html(text);
+	return text;
     }
 
 }
