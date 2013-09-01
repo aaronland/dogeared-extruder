@@ -1,6 +1,6 @@
 package info.aaronland.extruder;
 
-import info.aaronland.extruder.TextUtils;
+import info.aaronland.extruder.Document;
 import info.aaronland.extruder.UploadUtils;
 
 import java.io.InputStream;
@@ -33,16 +33,16 @@ import de.l3s.boilerpipe.extractors.ArticleExtractor;
 public class BoilerpipeResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BoilerpipeResource.class);
-    private static final TextUtils utils = new TextUtils();
 
     @GET
     public Response extrudeThisURL(@QueryParam("url") String url){
 
+	Document doc = null;
 	String text = "";
 
 	try {
-	    text = extrudeThis(url);
-	    text = massageText(text);
+	    doc = extrudeThis(url);
+	    text = doc.toHTML();
 	}
 
 	// TODO: trap MalformedURLExceptions and return NOT_ACCEPTABLE here (20130901/straup)
@@ -50,7 +50,7 @@ public class BoilerpipeResource {
 	catch (Exception e){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.toString()).build();
 	}
-	
+
 	return Response.status(Response.Status.OK).entity(text).build();
     }
 
@@ -63,11 +63,13 @@ public class BoilerpipeResource {
 	File file = up_utils.inputStreamToTempFile(upload);
 
 	String uri = "file://" + file.getAbsolutePath();
+
+	Document doc = null;
 	String text = "";
 
 	try {
-	    text = extrudeThis(uri);
-	    text = massageText(text);
+	    doc = extrudeThis(uri);
+	    text = doc.toHTML();
 	}
 
 	catch (Exception e){
@@ -80,7 +82,7 @@ public class BoilerpipeResource {
 	return Response.status(Response.Status.OK).entity(text).build();
     }
 
-    private String extrudeThis(String uri){
+    private Document extrudeThis(String uri){
 
 	URL url = null;
 	String text = "";
@@ -101,13 +103,8 @@ public class BoilerpipeResource {
 	    throw new RuntimeException(e);
 	}
 
-	return text;
-    }
-
-    private String massageText(String text){
-	//text = utils.unwrap(text);
-	text = utils.text2html(text);
-	return text;
+	Document doc = new Document(url, text);
+	return doc;
     }
 
 }
