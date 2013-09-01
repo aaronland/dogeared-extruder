@@ -17,52 +17,26 @@ public class Document {
     private static final Logger LOGGER = LoggerFactory.getLogger(Document.class);
 
     private URL uri;
-    private String text;
+    private ArrayList<String> blocks;
 
-    public Document(URL _uri, String _text){
-	uri = _uri;
-	text = _text;
+    // TO DO: make URI an optional parameter
+
+    public Document(String text){
+
+	// Something about this causes Jackson (?) to complete lose its
+	// shit when it tries to serialize it as a blob of JSON. As in:
+	// return Response.status(Response.Status.OK).entity(doc).build();
+	// (20130901/straup)
+
+	blocks = parseText(text);
     }
 
     public String getURI(){
 	return this.uri.toString();
     }
 
-    public String getText(){
-	return this.text;
-    }
-
     public ArrayList<String> getBlocks(){
-
-	String text = this.getText();
-	String[] raw = text.split(System.getProperty("line.separator"));
-
-	ArrayList<String> blocks = new ArrayList<String>();
-	String buffer = "";
-	
-	for (String ln : raw){
-
-	    ln = ln.trim();
-
-	    if (ln.equals("")){
-
-		if (buffer.length() > 0){
-		    blocks.add(buffer);
-		}
-
-		buffer = "";
-	    }
-	    
-	    else {
-		buffer = buffer + " " + ln;
-	    }
-	}
-
-	if (buffer.length() > 0){
-	    blocks.add(buffer);
-	}
-
-	return blocks;
+	return this.blocks;
     }
 
     public String toString(){
@@ -93,7 +67,36 @@ public class Document {
 	return sb.toString();
     }
 
-    public String toJSON(){
-	return "PLEASE WRITE ME";
+    private static ArrayList<String> parseText(String text){
+
+	String[] raw = text.split(System.getProperty("line.separator"));
+
+	ArrayList<String> blocks = new ArrayList<String>();
+	String buffer = "";
+	
+	for (String ln : raw){
+
+	    ln = ln.trim();
+
+	    if (ln.equals("")){
+
+		if (buffer.length() > 0){
+		    blocks.add(buffer);
+		}
+
+		buffer = "";
+	    }
+	    
+	    else {
+		buffer = buffer + " " + ln;
+	    }
+	}
+
+	if (buffer.length() > 0){
+	    blocks.add(buffer);
+	}
+
+	return blocks;
     }
+
 }

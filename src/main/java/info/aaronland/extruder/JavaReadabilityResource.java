@@ -1,7 +1,7 @@
 package info.aaronland.extruder;
 
-import info.aaronland.extruder.UploadUtils;
-import info.aaronland.extruder.TextUtils;
+import info.aaronland.extruder.Upload;
+import info.aaronland.extruder.Document;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -40,10 +40,12 @@ public class JavaReadabilityResource {
     @GET
     public Response extrudeThisURL(@QueryParam("url") String url){
 
-	String text = "";
+	Document doc;
+	String text;
 
 	try {
-	    text = extrudeThis(url);
+	    doc = extrudeThis(url);
+	    text = doc.toHTML();
 	}
 
 	// TODO: trap MalformedURLExceptions and return NOT_ACCEPTABLE here (20130901/straup)
@@ -57,32 +59,32 @@ public class JavaReadabilityResource {
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response extrudeThisFile(@FormDataParam("file") InputStream upload){
+    public Response extrudeThisFile(@FormDataParam("file") InputStream input){
 
-	// throw new RuntimeException("Java-readability needs to be taught to love local files");
+	Upload upload = new Upload();
+	File tmpfile = upload.writeTmpFile(input);
 
-	UploadUtils up_utils = new UploadUtils();
+	String uri = "file://" + tmpfile.getAbsolutePath();
 
-	File file = up_utils.inputStreamToTempFile(upload);
-
-	String uri = "file://" + file.getAbsolutePath();
-	String text = "";
+	Document doc;
+	String text;
 
 	try {
-	    text = extrudeThis(uri);
+	    doc = extrudeThis(uri);
+	    text = doc.toHTML();
 	}
 
 	catch (Exception e){
-	    up_utils.deleteFile(file);
+	    tmpfile.delete();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.toString()).build();
 	}
 
-	up_utils.deleteFile(file);
+	tmpfile.delete();
 
 	return Response.status(Response.Status.OK).entity(text).build();
     }
 
-    private String extrudeThis(String uri){
+    private Document extrudeThis(String uri){
 
 	URL url = null;
 	String text = "";
@@ -123,6 +125,6 @@ public class JavaReadabilityResource {
 	    throw new RuntimeException(e);
 	}
 	
-	return text;
+	return new Document(text);
     }
 }

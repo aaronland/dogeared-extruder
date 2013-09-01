@@ -1,6 +1,6 @@
 package info.aaronland.extruder;
 
-import info.aaronland.extruder.TextUtils;
+import info.aaronland.extruder.Document;
 
 import java.io.InputStream;
 import java.io.BufferedInputStream;
@@ -42,12 +42,13 @@ import org.xml.sax.ContentHandler;
 public class TikaResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TikaResource.class);
-    private static final TextUtils utils = new TextUtils();
 
     @GET
     public Response extrudeThisUrl(@QueryParam("url") String uri){
 
 	URL url = null;
+
+	Document doc = null;
 	String text = null;
 
 	try {
@@ -70,8 +71,8 @@ public class TikaResource {
 	}
 	
 	try {
-	    text = extrudeThis(buffer);
-	    text = massageText(text);
+	    doc = extrudeThis(buffer);
+	    text = doc.toHTML();
 	}
 
 	catch (Exception e){
@@ -112,11 +113,12 @@ public class TikaResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.toString()).build();
 	}
 
+	Document doc = null;
 	String text = "";
 
 	try {
-	    text = extrudeThis(buffer);
-	    text = massageText(text);
+	    doc = extrudeThis(buffer);
+	    text = doc.toHTML();
 	}
 
 	catch (Exception e){
@@ -129,7 +131,10 @@ public class TikaResource {
     // TO DO: figure out how to make this return HTML instead of text
     // (20130831/straup)
 
-    private String extrudeThis(InputStream buffer){
+    // I have no idea how that would square with the Document class...
+    // (20130901/straup)
+
+    private Document extrudeThis(InputStream buffer){
 		
 	Parser parser = new AutoDetectParser();
 	ContentHandler handler = new BodyContentHandler();
@@ -144,12 +149,7 @@ public class TikaResource {
 	    throw new RuntimeException(e);
 	}
 
-	return handler.toString();
+	return new Document(handler.toString());
     }
 
-    private String massageText(String text){
-	text = utils.unwrap(text);
-	text = utils.text2html(text);
-	return text;
-    }
 }

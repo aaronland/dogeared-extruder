@@ -1,7 +1,7 @@
 package info.aaronland.extruder;
 
 import info.aaronland.extruder.Document;
-import info.aaronland.extruder.UploadUtils;
+import info.aaronland.extruder.Upload;
 
 import java.io.InputStream;
 import java.io.File;
@@ -30,6 +30,7 @@ import de.l3s.boilerpipe.extractors.ArticleExtractor;
 
 @Path(value = "/boilerpipe")
 @Produces("text/html; charset=UTF-8")
+//@Produces("text/json; charset=UTF-8")
 public class BoilerpipeResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BoilerpipeResource.class);
@@ -56,13 +57,12 @@ public class BoilerpipeResource {
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response extrudeThisFile(@FormDataParam("file") InputStream upload){
+    public Response extrudeThisFile(@FormDataParam("file") InputStream input){
 
-	UploadUtils up_utils = new UploadUtils();
+	Upload upload = new Upload();
+	File tmpfile = upload.writeTmpFile(input);
 
-	File file = up_utils.inputStreamToTempFile(upload);
-
-	String uri = "file://" + file.getAbsolutePath();
+	String uri = "file://" + tmpfile.getAbsolutePath();
 
 	Document doc = null;
 	String text = "";
@@ -73,19 +73,19 @@ public class BoilerpipeResource {
 	}
 
 	catch (Exception e){
-	    up_utils.deleteFile(file);
+	    tmpfile.delete();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.toString()).build();
 	}
 
-	up_utils.deleteFile(file);
+	tmpfile.delete();
 
 	return Response.status(Response.Status.OK).entity(text).build();
     }
 
     private Document extrudeThis(String uri){
 
-	URL url = null;
-	String text = "";
+	URL url;
+	String text;
 
 	try {
 	    url = new URL(uri);
@@ -103,8 +103,7 @@ public class BoilerpipeResource {
 	    throw new RuntimeException(e);
 	}
 
-	Document doc = new Document(url, text);
-	return doc;
+	return new Document(text);
     }
 
 }
