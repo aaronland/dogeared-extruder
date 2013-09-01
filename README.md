@@ -25,7 +25,7 @@ And then you can pass it URLs as `GET` parameters:
 
 	$> curl 'http://localhost:8080/tika?url=SOME_URL_DOT_PDF'
 
-It also supports local files uploads via `POST`:
+It also supports local files via `POST` uploads:
 
 	$> curl -X POST -F "file=SOME_FILE.html" http://localhost:8080/boilerpipe
 
