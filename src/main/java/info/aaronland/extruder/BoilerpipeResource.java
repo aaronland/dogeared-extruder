@@ -91,9 +91,6 @@ public class BoilerpipeResource {
 	    throw new RuntimeException(e);
 	}
 
-	
-	LOGGER.info("GET " + url.toString());
-
 	try {
 	    text = ArticleExtractor.INSTANCE.getText(url);
 	}

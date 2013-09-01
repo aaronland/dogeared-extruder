@@ -8,6 +8,9 @@ import java.util.UUID;
 
 public class UploadUtils {
 
+    // TO DO: make me all object like and specific to an input stream
+    // (20130901/straup)
+
     public File inputStreamToTempFile(InputStream is){
 
 	String tempdir = System.getProperty("java.io.tmpdir");
