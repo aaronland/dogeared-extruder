@@ -38,7 +38,7 @@ import org.apache.tika.sax.BodyContentHandler;
 import org.xml.sax.ContentHandler;
 
 @Path(value = "/tika")
-@Produces("text/html; charset=UTF-8")
+@Produces("text/json; charset=UTF-8")
 public class TikaResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TikaResource.class);
@@ -46,10 +46,8 @@ public class TikaResource {
     @GET
     public Response extrudeThisUrl(@QueryParam("url") String uri){
 
-	URL url = null;
-
-	Document doc = null;
-	String text = null;
+	URL url;
+	Document doc;
 
 	try {
 	    url = new URL(uri);
@@ -72,14 +70,13 @@ public class TikaResource {
 	
 	try {
 	    doc = extrudeThis(buffer);
-	    text = doc.toHTML();
 	}
 
 	catch (Exception e){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.toString()).build();
 	}
 
-	return Response.status(Response.Status.OK).entity(text).build();
+	return Response.status(Response.Status.OK).entity(doc).build();
     }
 
     @POST
@@ -114,18 +111,16 @@ public class TikaResource {
 	}
 
 	Document doc = null;
-	String text = "";
 
 	try {
 	    doc = extrudeThis(buffer);
-	    text = doc.toHTML();
 	}
 
 	catch (Exception e){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.toString()).build();
 	}
 
-	return Response.status(Response.Status.OK).entity(text).build();
+	return Response.status(Response.Status.OK).entity(doc).build();
     }
 
     // TO DO: figure out how to make this return HTML instead of text

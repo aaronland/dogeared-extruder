@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.ArrayList;
 import java.lang.StringBuilder;
 
-import java.net.URL;
-
 import org.apache.commons.lang3.StringEscapeUtils;
 // import org.apache.commons.lang3.text.WordUtils;
 
@@ -16,23 +14,12 @@ public class Document {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Document.class);
 
-    private URL uri;
     private ArrayList<String> blocks;
 
     // TO DO: make URI an optional parameter
 
     public Document(String text){
-
-	// Something about this causes Jackson (?) to complete lose its
-	// shit when it tries to serialize it as a blob of JSON. As in:
-	// return Response.status(Response.Status.OK).entity(doc).build();
-	// (20130901/straup)
-
 	blocks = parseText(text);
-    }
-
-    public String getURI(){
-	return this.uri.toString();
     }
 
     public ArrayList<String> getBlocks(){

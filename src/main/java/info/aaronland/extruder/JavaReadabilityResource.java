@@ -32,7 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Path(value = "/java-readability")
-@Produces("text/html; charset=UTF-8")
+@Produces("text/json; charset=UTF-8")
 public class JavaReadabilityResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JavaReadabilityResource.class);
@@ -41,11 +41,9 @@ public class JavaReadabilityResource {
     public Response extrudeThisURL(@QueryParam("url") String url){
 
 	Document doc;
-	String text;
 
 	try {
 	    doc = extrudeThis(url);
-	    text = doc.toHTML();
 	}
 
 	// TODO: trap MalformedURLExceptions and return NOT_ACCEPTABLE here (20130901/straup)
@@ -54,7 +52,7 @@ public class JavaReadabilityResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.toString()).build();
 	}
 
-	return Response.status(Response.Status.OK).entity(text).build();
+	return Response.status(Response.Status.OK).entity(doc).build();
     }
 
     @POST
@@ -71,7 +69,6 @@ public class JavaReadabilityResource {
 
 	try {
 	    doc = extrudeThis(uri);
-	    text = doc.toHTML();
 	}
 
 	catch (Exception e){
@@ -81,7 +78,7 @@ public class JavaReadabilityResource {
 
 	tmpfile.delete();
 
-	return Response.status(Response.Status.OK).entity(text).build();
+	return Response.status(Response.Status.OK).entity(doc).build();
     }
 
     private Document extrudeThis(String uri){
