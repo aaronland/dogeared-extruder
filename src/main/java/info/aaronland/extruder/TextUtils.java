@@ -52,7 +52,7 @@ public class TextUtils {
 
     public String text2html(String text){
 
-	String html = "";
+	String html = "<style type=\"text/css\">body { margin: 12%; margin-top: 10%; line-height: 1.9em; } p { margin-bottom: 2em; text-indent: 2em; font-size:1.5em; }</style>";
 	String[] paras = text.split("[\n\n]+");
 
 	Integer count = paras.length;
