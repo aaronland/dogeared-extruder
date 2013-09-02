@@ -3,11 +3,19 @@ package info.aaronland.extruder;
 import com.yammer.dropwizard.Service;
 import com.yammer.dropwizard.config.Bootstrap;
 import com.yammer.dropwizard.config.Environment;
+import com.yammer.dropwizard.views.ViewBundle;
 
 import info.aaronland.extruder.ExtruderConfiguration;
 import info.aaronland.extruder.BoilerpipeResource;
 
 public class ExtruderService extends Service<ExtruderConfiguration> {
+
+    /*
+    public void initialize(Bootstrap<ExtruderConfiguration> bootstrap) {
+	bootstrap.setName("my-service");
+	bootstrap.addBundle(new ViewBundle());
+    }
+    */
 
     public static void main(String[] args) throws Exception {
         new ExtruderService().run(args);

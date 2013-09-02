@@ -31,6 +31,7 @@ import de.l3s.boilerpipe.extractors.ArticleExtractor;
 
 @Path(value = "/boilerpipe")
 @Produces("text/json; charset=UTF-8")
+//@Produces({MediaType.TEXT_HTML, MediaType.APPLICATION_JSON})
 public class BoilerpipeResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BoilerpipeResource.class);
