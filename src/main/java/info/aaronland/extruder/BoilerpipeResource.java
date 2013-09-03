@@ -30,8 +30,8 @@ import de.l3s.boilerpipe.extractors.DefaultExtractor;
 import de.l3s.boilerpipe.extractors.ArticleExtractor;
 
 @Path(value = "/boilerpipe")
-@Produces("text/json; charset=UTF-8")
-//@Produces({MediaType.TEXT_HTML, MediaType.APPLICATION_JSON})
+//@Produces("text/json; charset=UTF-8")
+@Produces({MediaType.TEXT_HTML, MediaType.APPLICATION_JSON})
 public class BoilerpipeResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BoilerpipeResource.class);
@@ -40,9 +40,11 @@ public class BoilerpipeResource {
     public Response extrudeThisURL(@QueryParam("url") String url){
 
 	Document doc = null;
+	DocumentView view = null;
 
 	try {
 	    doc = extrudeThis(url);
+	    view = new DocumentView(doc);
 	}
 
 	// TODO: trap MalformedURLExceptions and return NOT_ACCEPTABLE here (20130901/straup)
@@ -51,7 +53,7 @@ public class BoilerpipeResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.toString()).build();
 	}
 
-	return Response.status(Response.Status.OK).entity(doc).build();
+	return Response.status(Response.Status.OK).entity(view).build();
     }
 
     @POST
@@ -64,9 +66,11 @@ public class BoilerpipeResource {
 	String uri = "file://" + tmpfile.getAbsolutePath();
 
 	Document doc;
+	DocumentView view;
 
 	try {
 	    doc = extrudeThis(uri);
+	    view = new DocumentView(doc);
 	}
 
 	catch (Exception e){
@@ -76,7 +80,7 @@ public class BoilerpipeResource {
 
 	tmpfile.delete();
 
-	return Response.status(Response.Status.OK).entity(doc).build();
+	return Response.status(Response.Status.OK).entity(view).build();
     }
 
     private Document extrudeThis(String uri){
@@ -100,7 +104,8 @@ public class BoilerpipeResource {
 	    throw new RuntimeException(e);
 	}
 
-	return new Document(text);
+	Document doc = new Document(text);
+	return doc;
     }
 
 }

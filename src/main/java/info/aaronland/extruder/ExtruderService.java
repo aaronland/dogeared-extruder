@@ -10,13 +10,6 @@ import info.aaronland.extruder.BoilerpipeResource;
 
 public class ExtruderService extends Service<ExtruderConfiguration> {
 
-    /*
-    public void initialize(Bootstrap<ExtruderConfiguration> bootstrap) {
-	bootstrap.setName("my-service");
-	bootstrap.addBundle(new ViewBundle());
-    }
-    */
-
     public static void main(String[] args) throws Exception {
         new ExtruderService().run(args);
     }
@@ -24,6 +17,7 @@ public class ExtruderService extends Service<ExtruderConfiguration> {
     @Override
 	public void initialize(Bootstrap<ExtruderConfiguration> bootstrap) {
         bootstrap.setName("extruder");
+	bootstrap.addBundle(new ViewBundle());
     }
 
     @Override
