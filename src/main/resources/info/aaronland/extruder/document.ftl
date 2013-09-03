@@ -1,7 +1,7 @@
 <#-- @ftlvariable name="" type="info.aaronland.extruder.DocumentView" -->
 <html>
   <head>
-    <title></title>
+    <title><#-- please fix me --></title>
     <style type="text/css">
       body {
       font-size: 1.5em;
