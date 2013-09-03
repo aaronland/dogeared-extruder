@@ -37,6 +37,10 @@ public class TextUtils {
 	    }
 	}
 
+	if (buffer.length() > 0){
+	    paras.add(buffer);
+	}
+
 	// why you hate "join" so much Java?
 	// (20130831/straup)
 

@@ -36,6 +36,7 @@ import org.slf4j.LoggerFactory;
 public class JavaReadabilityResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JavaReadabilityResource.class);
+    private static final TextUtils utils = new TextUtils();
 
     @GET
     public Response extrudeThisURL(@QueryParam("url") String url){
@@ -44,6 +45,7 @@ public class JavaReadabilityResource {
 
 	try {
 	    text = extrudeThis(url);
+	    text = massageText(text);
 	}
 
 	// TODO: trap MalformedURLExceptions and return NOT_ACCEPTABLE here (20130901/straup)
@@ -70,6 +72,7 @@ public class JavaReadabilityResource {
 
 	try {
 	    text = extrudeThis(uri);
+	    text = massageText(text);
 	}
 
 	catch (Exception e){
@@ -125,4 +128,10 @@ public class JavaReadabilityResource {
 	
 	return text;
     }
+
+    private String massageText(String text){
+	text = utils.text2html(text);
+	return text;
+    }
+
 }

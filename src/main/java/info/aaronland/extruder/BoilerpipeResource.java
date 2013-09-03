@@ -105,7 +105,6 @@ public class BoilerpipeResource {
     }
 
     private String massageText(String text){
-	//text = utils.unwrap(text);
 	text = utils.text2html(text);
 	return text;
     }
