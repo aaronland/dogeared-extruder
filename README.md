@@ -5,11 +5,8 @@ This is a meant to be a simple HTTP Pony to wrap the `boilerpipe` and `Tika` and
 clones of the `readability` text extraction libraries using the `dropwizard`
 framework.
 
-It basically works at the moment but I am not a Java person so I am still trying
-to fumble my way around this foreign land.
-
 To start the server:
-
+   
 	$> cd dropwizard-extruder
 	$> make exec
 	mvn compile exec:java
@@ -33,8 +30,20 @@ It also supports local files via `POST` uploads:
   
 	$> curl -X POST -F "file=SOME_FILE.pdf" http://localhost:8080/tika
 
+By default the server will return HTML but if you pass an `Accept:
+application/json` header you'll get a big old blob of JSON instead.
+
 Notes
 --
+
+* It basically works at the moment but I am not a Java person so I am still trying
+  to fumble my way around this foreign land. For example, the correct `mvn`
+  commands for building a standalone server that runs in the background.
+
+* The text/content extraction is pretty heavy-handed and relies on the
+  underlying libraries to do the right thing. Currently everything returns
+  blocks of plain text so things like lists and code samples will probably be
+  mangled. This is not ideal but that stuff is meant to be handled going forward.
 
 * If you look carefully at the URLs above and the actual classes that define the
   functionality they all look basically the same save for the names of the
@@ -46,14 +55,12 @@ Notes
 branch](https://github.com/straup/dropwizard-extruder/tree/snacktory) that uses
 the `snacktory` readability clone but it has not been merged in to master yet.
 
-Open questions
+To do
 --
 
-Should this:
+Aside from stuff listed in the [TODO.txt](TODO.txt} file:
 
-* Always return plain text
-* Always return HTML
-* Always return JSON blobs containing "paragraphs" 
+* Health checks
 
 See also
 --
