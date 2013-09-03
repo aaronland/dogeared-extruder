@@ -1,7 +1,8 @@
 package info.aaronland.extruder;
 
-import info.aaronland.extruder.Document;
 import info.aaronland.extruder.Upload;
+import info.aaronland.extruder.Document;
+import info.aaronland.extruder.DocumentView;
 
 import java.io.InputStream;
 import java.io.File;
@@ -30,7 +31,6 @@ import de.l3s.boilerpipe.extractors.DefaultExtractor;
 import de.l3s.boilerpipe.extractors.ArticleExtractor;
 
 @Path(value = "/boilerpipe")
-//@Produces("text/json; charset=UTF-8")
 @Produces({MediaType.TEXT_HTML, MediaType.APPLICATION_JSON})
 public class BoilerpipeResource {
 
@@ -39,8 +39,8 @@ public class BoilerpipeResource {
     @GET
     public Response extrudeThisURL(@QueryParam("url") String url){
 
-	Document doc = null;
-	DocumentView view = null;
+	Document doc;
+	DocumentView view;
 
 	try {
 	    doc = extrudeThis(url);

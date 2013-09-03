@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.lang.StringBuilder;
 
 import org.apache.commons.lang3.StringEscapeUtils;
-// import org.apache.commons.lang3.text.WordUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,6 +53,9 @@ public class Document {
 	return sb.toString();
     }
 
+    // Please make me better and if possible make the unwrapText method
+    // in TikaResource redundant... (20130903/straup)
+
     private static ArrayList<String> parseText(String text){
 
 	String[] raw = text.split(System.getProperty("line.separator"));
@@ -65,18 +67,8 @@ public class Document {
 
 	    ln = ln.trim();
 
-	    if (ln.equals("")){
-
-		if (buffer.length() > 0){
-		    blocks.add(buffer);
-		}
-
-		buffer = "";
-	    }
-	    
-	    else {
-		buffer = buffer + " " + ln;
-	    }
+	    blocks.add(ln);
+	    buffer = "";
 	}
 
 	if (buffer.length() > 0){

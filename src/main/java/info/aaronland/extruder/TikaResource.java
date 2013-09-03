@@ -1,6 +1,11 @@
 package info.aaronland.extruder;
 
 import info.aaronland.extruder.Document;
+import info.aaronland.extruder.DocumentView;
+
+import java.util.List;
+import java.util.ArrayList;
+import java.lang.StringBuilder;
 
 import java.io.InputStream;
 import java.io.BufferedInputStream;
@@ -38,7 +43,7 @@ import org.apache.tika.sax.BodyContentHandler;
 import org.xml.sax.ContentHandler;
 
 @Path(value = "/tika")
-@Produces("text/json; charset=UTF-8")
+@Produces({MediaType.TEXT_HTML, MediaType.APPLICATION_JSON})
 public class TikaResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TikaResource.class);
@@ -48,6 +53,7 @@ public class TikaResource {
 
 	URL url;
 	Document doc;
+	DocumentView view;
 
 	try {
 	    url = new URL(uri);
@@ -70,13 +76,14 @@ public class TikaResource {
 	
 	try {
 	    doc = extrudeThis(buffer);
+	    view = new DocumentView(doc);
 	}
 
 	catch (Exception e){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.toString()).build();
 	}
 
-	return Response.status(Response.Status.OK).entity(doc).build();
+	return Response.status(Response.Status.OK).entity(view).build();
     }
 
     @POST
@@ -110,17 +117,19 @@ public class TikaResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.toString()).build();
 	}
 
-	Document doc = null;
+	Document doc;
+	DocumentView view;
 
 	try {
 	    doc = extrudeThis(buffer);
+	    view = new DocumentView(doc);
 	}
 
 	catch (Exception e){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.toString()).build();
 	}
 
-	return Response.status(Response.Status.OK).entity(doc).build();
+	return Response.status(Response.Status.OK).entity(view).build();
     }
 
     // TO DO: figure out how to make this return HTML instead of text
@@ -144,7 +153,54 @@ public class TikaResource {
 	    throw new RuntimeException(e);
 	}
 
-	return new Document(handler.toString());
+	String text = handler.toString();
+	text = unwrapText(text);
+
+	return new Document(text);
+    }
+
+    // Not awesome. No. (20130903/straup)
+
+    private static String unwrapText(String text){
+
+	String[] raw = text.split(System.getProperty("line.separator"));
+
+	List<String> paras = new ArrayList<String>();
+	String buffer = "";
+	
+	for (String ln : raw){
+
+	    ln = ln.trim();
+
+	    if (ln.equals("")){
+
+		if (buffer.length() > 0){
+		    paras.add(buffer);
+		}
+
+		buffer = "";
+	    }
+	    
+	    else {
+		buffer = buffer + " " + ln;
+	    }
+	}
+
+	if (buffer.length() > 0){
+	    paras.add(buffer);
+	}
+
+	// why you hate "join" so much Java?
+	// (20130831/straup)
+
+	StringBuilder sb = new StringBuilder();
+
+	for (Object obj : paras) {
+	    sb.append(obj.toString());
+	    sb.append("\n\n");
+	}
+
+	return sb.toString();
     }
 
 }
