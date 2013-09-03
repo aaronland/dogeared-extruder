@@ -1,7 +1,8 @@
 package info.aaronland.extruder;
 
-import info.aaronland.extruder.TextUtils;
-import info.aaronland.extruder.UploadUtils;
+import info.aaronland.extruder.Upload;
+import info.aaronland.extruder.Document;
+import info.aaronland.extruder.DocumentView;
 
 import java.io.InputStream;
 import java.io.File;
@@ -17,6 +18,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
 
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.MediaType;
 
@@ -29,20 +31,20 @@ import de.l3s.boilerpipe.extractors.DefaultExtractor;
 import de.l3s.boilerpipe.extractors.ArticleExtractor;
 
 @Path(value = "/boilerpipe")
-@Produces("text/html; charset=UTF-8")
+@Produces({MediaType.TEXT_HTML, MediaType.APPLICATION_JSON})
 public class BoilerpipeResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BoilerpipeResource.class);
-    private static final TextUtils utils = new TextUtils();
 
     @GET
     public Response extrudeThisURL(@QueryParam("url") String url){
 
-	String text = "";
+	Document doc;
+	DocumentView view;
 
 	try {
-	    text = extrudeThis(url);
-	    text = massageText(text);
+	    doc = extrudeThis(url);
+	    view = new DocumentView(doc);
 	}
 
 	// TODO: trap MalformedURLExceptions and return NOT_ACCEPTABLE here (20130901/straup)
@@ -50,40 +52,41 @@ public class BoilerpipeResource {
 	catch (Exception e){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.toString()).build();
 	}
-	
-	return Response.status(Response.Status.OK).entity(text).build();
+
+	return Response.status(Response.Status.OK).entity(view).build();
     }
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response extrudeThisFile(@FormDataParam("file") InputStream upload){
+    public Response extrudeThisFile(@FormDataParam("file") InputStream input){
 
-	UploadUtils up_utils = new UploadUtils();
+	Upload upload = new Upload();
+	File tmpfile = upload.writeTmpFile(input);
 
-	File file = up_utils.inputStreamToTempFile(upload);
+	String uri = "file://" + tmpfile.getAbsolutePath();
 
-	String uri = "file://" + file.getAbsolutePath();
-	String text = "";
+	Document doc;
+	DocumentView view;
 
 	try {
-	    text = extrudeThis(uri);
-	    text = massageText(text);
+	    doc = extrudeThis(uri);
+	    view = new DocumentView(doc);
 	}
 
 	catch (Exception e){
-	    up_utils.deleteFile(file);
+	    tmpfile.delete();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.toString()).build();
 	}
 
-	up_utils.deleteFile(file);
+	tmpfile.delete();
 
-	return Response.status(Response.Status.OK).entity(text).build();
+	return Response.status(Response.Status.OK).entity(view).build();
     }
 
-    private String extrudeThis(String uri){
+    private Document extrudeThis(String uri){
 
-	URL url = null;
-	String text = "";
+	URL url;
+	String text;
 
 	try {
 	    url = new URL(uri);
@@ -101,12 +104,7 @@ public class BoilerpipeResource {
 	    throw new RuntimeException(e);
 	}
 
-	return text;
-    }
-
-    private String massageText(String text){
-	text = utils.text2html(text);
-	return text;
+	return new Document(text);
     }
 
 }

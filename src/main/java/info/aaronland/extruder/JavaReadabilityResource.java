@@ -1,7 +1,8 @@
 package info.aaronland.extruder;
 
-import info.aaronland.extruder.UploadUtils;
-import info.aaronland.extruder.TextUtils;
+import info.aaronland.extruder.Upload;
+import info.aaronland.extruder.Document;
+import info.aaronland.extruder.DocumentView;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -32,20 +33,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Path(value = "/java-readability")
-@Produces("text/html; charset=UTF-8")
+@Produces({MediaType.TEXT_HTML, MediaType.APPLICATION_JSON})
 public class JavaReadabilityResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JavaReadabilityResource.class);
-    private static final TextUtils utils = new TextUtils();
 
     @GET
     public Response extrudeThisURL(@QueryParam("url") String url){
 
-	String text = "";
+	Document doc;
+	DocumentView view;
 
 	try {
-	    text = extrudeThis(url);
-	    text = massageText(text);
+	    doc = extrudeThis(url);
+	    view = new DocumentView(doc);
 	}
 
 	// TODO: trap MalformedURLExceptions and return NOT_ACCEPTABLE here (20130901/straup)
@@ -54,38 +55,37 @@ public class JavaReadabilityResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.toString()).build();
 	}
 
-	return Response.status(Response.Status.OK).entity(text).build();
+	return Response.status(Response.Status.OK).entity(view).build();
     }
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response extrudeThisFile(@FormDataParam("file") InputStream upload){
+    public Response extrudeThisFile(@FormDataParam("file") InputStream input){
 
-	// throw new RuntimeException("Java-readability needs to be taught to love local files");
+	Upload upload = new Upload();
+	File tmpfile = upload.writeTmpFile(input);
 
-	UploadUtils up_utils = new UploadUtils();
+	String uri = "file://" + tmpfile.getAbsolutePath();
 
-	File file = up_utils.inputStreamToTempFile(upload);
-
-	String uri = "file://" + file.getAbsolutePath();
-	String text = "";
+	Document doc;
+	DocumentView view;
 
 	try {
-	    text = extrudeThis(uri);
-	    text = massageText(text);
+	    doc = extrudeThis(uri);
+	    view = new DocumentView(doc);
 	}
 
 	catch (Exception e){
-	    up_utils.deleteFile(file);
+	    tmpfile.delete();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.toString()).build();
 	}
 
-	up_utils.deleteFile(file);
+	tmpfile.delete();
 
-	return Response.status(Response.Status.OK).entity(text).build();
+	return Response.status(Response.Status.OK).entity(view).build();
     }
 
-    private String extrudeThis(String uri){
+    private Document extrudeThis(String uri){
 
 	URL url = null;
 	String text = "";
@@ -126,12 +126,7 @@ public class JavaReadabilityResource {
 	    throw new RuntimeException(e);
 	}
 	
-	return text;
-    }
-
-    private String massageText(String text){
-	text = utils.text2html(text);
-	return text;
+	return new Document(text);
     }
 
 }

@@ -1,6 +1,11 @@
 package info.aaronland.extruder;
 
-import info.aaronland.extruder.TextUtils;
+import info.aaronland.extruder.Document;
+import info.aaronland.extruder.DocumentView;
+
+import java.util.List;
+import java.util.ArrayList;
+import java.lang.StringBuilder;
 
 import java.io.InputStream;
 import java.io.BufferedInputStream;
@@ -38,17 +43,17 @@ import org.apache.tika.sax.BodyContentHandler;
 import org.xml.sax.ContentHandler;
 
 @Path(value = "/tika")
-@Produces("text/html; charset=UTF-8")
+@Produces({MediaType.TEXT_HTML, MediaType.APPLICATION_JSON})
 public class TikaResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TikaResource.class);
-    private static final TextUtils utils = new TextUtils();
 
     @GET
     public Response extrudeThisUrl(@QueryParam("url") String uri){
 
-	URL url = null;
-	String text = null;
+	URL url;
+	Document doc;
+	DocumentView view;
 
 	try {
 	    url = new URL(uri);
@@ -70,15 +75,15 @@ public class TikaResource {
 	}
 	
 	try {
-	    text = extrudeThis(buffer);
-	    text = massageText(text);
+	    doc = extrudeThis(buffer);
+	    view = new DocumentView(doc);
 	}
 
 	catch (Exception e){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.toString()).build();
 	}
 
-	return Response.status(Response.Status.OK).entity(text).build();
+	return Response.status(Response.Status.OK).entity(view).build();
     }
 
     @POST
@@ -112,24 +117,28 @@ public class TikaResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.toString()).build();
 	}
 
-	String text = "";
+	Document doc;
+	DocumentView view;
 
 	try {
-	    text = extrudeThis(buffer);
-	    text = massageText(text);
+	    doc = extrudeThis(buffer);
+	    view = new DocumentView(doc);
 	}
 
 	catch (Exception e){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.toString()).build();
 	}
 
-	return Response.status(Response.Status.OK).entity(text).build();
+	return Response.status(Response.Status.OK).entity(view).build();
     }
 
     // TO DO: figure out how to make this return HTML instead of text
     // (20130831/straup)
 
-    private String extrudeThis(InputStream buffer){
+    // I have no idea how that would square with the Document class...
+    // (20130901/straup)
+
+    private Document extrudeThis(InputStream buffer){
 		
 	Parser parser = new AutoDetectParser();
 	ContentHandler handler = new BodyContentHandler();
@@ -144,12 +153,54 @@ public class TikaResource {
 	    throw new RuntimeException(e);
 	}
 
-	return handler.toString();
+	String text = handler.toString();
+	text = unwrapText(text);
+
+	return new Document(text);
     }
 
-    private String massageText(String text){
-	text = utils.unwrap(text);
-	text = utils.text2html(text);
-	return text;
+    // Not awesome. No. (20130903/straup)
+
+    private static String unwrapText(String text){
+
+	String[] raw = text.split(System.getProperty("line.separator"));
+
+	List<String> paras = new ArrayList<String>();
+	String buffer = "";
+	
+	for (String ln : raw){
+
+	    ln = ln.trim();
+
+	    if (ln.equals("")){
+
+		if (buffer.length() > 0){
+		    paras.add(buffer);
+		}
+
+		buffer = "";
+	    }
+	    
+	    else {
+		buffer = buffer + " " + ln;
+	    }
+	}
+
+	if (buffer.length() > 0){
+	    paras.add(buffer);
+	}
+
+	// why you hate "join" so much Java?
+	// (20130831/straup)
+
+	StringBuilder sb = new StringBuilder();
+
+	for (Object obj : paras) {
+	    sb.append(obj.toString());
+	    sb.append("\n\n");
+	}
+
+	return sb.toString();
     }
+
 }

@@ -3,6 +3,7 @@ package info.aaronland.extruder;
 import com.yammer.dropwizard.Service;
 import com.yammer.dropwizard.config.Bootstrap;
 import com.yammer.dropwizard.config.Environment;
+import com.yammer.dropwizard.views.ViewBundle;
 
 import info.aaronland.extruder.ExtruderConfiguration;
 import info.aaronland.extruder.BoilerpipeResource;
@@ -16,6 +17,7 @@ public class ExtruderService extends Service<ExtruderConfiguration> {
     @Override
 	public void initialize(Bootstrap<ExtruderConfiguration> bootstrap) {
         bootstrap.setName("extruder");
+	bootstrap.addBundle(new ViewBundle());
     }
 
     @Override

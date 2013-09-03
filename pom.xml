@@ -21,6 +21,12 @@
       </dependency>
 
       <dependency>
+        <groupId>com.yammer.dropwizard</groupId>
+        <artifactId>dropwizard-views</artifactId>
+        <version>0.6.2</version>
+      </dependency>
+
+      <dependency>
         <groupId>com.sun.jersey.contribs</groupId>
         <artifactId>jersey-multipart</artifactId>
 	<!-- this is important and needs to be in sync with the jersey defined in -->
