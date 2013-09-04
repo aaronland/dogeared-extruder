@@ -1,6 +1,9 @@
 exec:
 	mvn compile exec:java
 
+package:
+	mvn package
+
 todo:
 	echo "# Generated automatically at" `date` > TODO.txt
 	echo "" >> TODO.txt
