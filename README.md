@@ -60,6 +60,8 @@ To do
 
 Aside from stuff listed in the [TODO.txt](TODO.txt} file:
 
+* UTF-8 headers
+
 * Health checks
 
 See also

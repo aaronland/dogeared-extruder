@@ -13,6 +13,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.ByteArrayInputStream;
 
 import com.sun.jersey.core.header.FormDataContentDisposition;
+import com.sun.jersey.multipart.FormDataMultiPart;
+import com.sun.jersey.multipart.FormDataBodyPart;
 import com.sun.jersey.multipart.FormDataParam;
 
 import javax.ws.rs.GET;
@@ -20,13 +22,12 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 
-import javax.ws.rs.core.MediaType;
-
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.Response;
 
 import java.net.URL;
 import java.net.URLConnection;
@@ -88,7 +89,10 @@ public class TikaResource {
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response extrudeThisFile(@FormDataParam("file") InputStream upload){
+    public Response extrudeThisFile(FormDataMultiPart formParams){
+
+	FormDataBodyPart stream = formParams.getField("file");
+	InputStream upload = stream.getValueAs(InputStream.class);
 
 	// MOON LANGUAGE – if there's a better way to make it so that
 	// Tika doesn't complain that the stream (upload) is already

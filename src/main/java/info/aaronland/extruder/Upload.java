@@ -30,8 +30,6 @@ public class Upload {
 
 	File tmpfile = new File(this.path);
 
-	LOGGER.info("WRITE " + this.path);
-
 	try {
 
 	    FileOutputStream out = new FileOutputStream(tmpfile);
