@@ -10,7 +10,6 @@ import java.io.File;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.FormDataBodyPart;
-import com.sun.jersey.multipart.FormDataParam;
 import javax.ws.rs.core.MediaType;
 
 import javax.ws.rs.GET;
@@ -61,10 +60,8 @@ public class BoilerpipeResource {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response extrudeThisFile(FormDataMultiPart formParams){
 
-	LOGGER.info("START...");
 	FormDataBodyPart stream = formParams.getField("file");
 	InputStream input = stream.getValueAs(InputStream.class);
-	LOGGER.info("INPUT...");
 
 	Upload upload = new Upload();
 	File tmpfile = upload.writeTmpFile(input);

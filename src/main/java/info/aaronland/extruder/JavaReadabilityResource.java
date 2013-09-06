@@ -18,7 +18,6 @@ import javax.ws.rs.core.Response.Status;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.FormDataBodyPart;
-import com.sun.jersey.multipart.FormDataParam;
 
 import java.io.InputStream;
 import java.io.File;

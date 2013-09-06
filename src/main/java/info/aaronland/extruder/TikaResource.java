@@ -15,7 +15,6 @@ import java.io.ByteArrayInputStream;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.FormDataBodyPart;
-import com.sun.jersey.multipart.FormDataParam;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
