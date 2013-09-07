@@ -86,6 +86,7 @@ public class TikaResource {
 	return Response.status(Response.Status.OK).entity(view).build();
     }
 
+    /*
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response extrudeThisFile(FormDataMultiPart formParams){
@@ -134,6 +135,7 @@ public class TikaResource {
 
 	return Response.status(Response.Status.OK).entity(view).build();
     }
+    */
 
     // TO DO: figure out how to make this return HTML instead of text
     // (20130831/straup)
