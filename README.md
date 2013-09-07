@@ -22,14 +22,6 @@ And then you can pass it URLs as `GET` parameters:
 
 	$> curl 'http://localhost:8080/tika?url=SOME_URL_DOT_PDF'
 
-It also supports local files via `POST` uploads:
-
-	$> curl -X POST -F "file=SOME_FILE.html" http://localhost:8080/boilerpipe
-
-	$> curl -X POST -F "file=SOME_FILE.html" http://localhost:8080/java-readability
-  
-	$> curl -X POST -F "file=SOME_FILE.pdf" http://localhost:8080/tika
-
 By default the server will return HTML but if you pass an `Accept:
 application/json` header you'll get a big old blob of JSON instead.
 
@@ -59,6 +51,11 @@ To do
 --
 
 Aside from stuff listed in the [TODO.txt](TODO.txt} file:
+
+* Make POST-ing local files work when a jar file is created by `maven-shade`. It
+  works fine when you run `make exec` because ... Java? POSTs have been disabled
+  in the `master` branch but are enabled in the `post` branch until I figure out
+  what's going on. 
 
 * UTF-8 headers
 

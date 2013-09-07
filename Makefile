@@ -1,7 +1,7 @@
 exec:
 	mvn compile exec:java
 
-build:
+build: todo
 	mvn clean
 	mvn install
 
