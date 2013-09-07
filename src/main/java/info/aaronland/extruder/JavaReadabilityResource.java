@@ -59,7 +59,6 @@ public class JavaReadabilityResource {
 	return Response.status(Response.Status.OK).entity(view).build();
     }
 
-    /*
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response extrudeThisFile(FormDataMultiPart formParams){
@@ -89,7 +88,6 @@ public class JavaReadabilityResource {
 
 	return Response.status(Response.Status.OK).entity(view).build();
     }
-    */
 
     private Document extrudeThis(String uri){
 

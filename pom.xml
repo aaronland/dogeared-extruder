@@ -40,13 +40,11 @@
 	</exclusions>
       </dependency>   
 
-      <!--
       <dependency>
         <groupId>org.jvnet.mimepull</groupId>
         <artifactId>mimepull</artifactId>
         <version>1.9.3</version>
       </dependency>   
-      -->
 
       <!-- boilerpipe stuff -->
 
