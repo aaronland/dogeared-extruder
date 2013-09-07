@@ -6,12 +6,13 @@ import com.yammer.dropwizard.views.View;
 public class DocumentView extends View {
     private final Document document;
 
-    public DocumentView(Document document) {
+    public DocumentView(Document document){
         super("document.ftl");
         this.document = document;
     }
 
-    public Document getDocument() {
+    public Document getDocument(){
         return document;
     }
+
 }
