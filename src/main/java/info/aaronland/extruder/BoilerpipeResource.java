@@ -31,7 +31,7 @@ import de.l3s.boilerpipe.extractors.DefaultExtractor;
 import de.l3s.boilerpipe.extractors.ArticleExtractor;
 
 @Path(value = "/boilerpipe")
-@Produces({MediaType.TEXT_HTML + "; charset=utf-8", MediaType.APPLICATION_JSON})
+@Produces({MediaType.TEXT_HTML + "; charset=UTF-8", MediaType.APPLICATION_JSON})
 public class BoilerpipeResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BoilerpipeResource.class);
@@ -52,6 +52,9 @@ public class BoilerpipeResource {
 	catch (Exception e){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.toString()).build();
 	}
+
+	//String html = doc.toHTML();
+	//return Response.status(Response.Status.OK).entity(html).build();
 
 	return Response.status(Response.Status.OK).entity(view).build();
     }

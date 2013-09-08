@@ -43,7 +43,7 @@ import org.apache.tika.sax.BodyContentHandler;
 import org.xml.sax.ContentHandler;
 
 @Path(value = "/tika")
-@Produces({MediaType.TEXT_HTML, MediaType.APPLICATION_JSON})
+@Produces({MediaType.TEXT_HTML + "; charset=UTF-8", MediaType.APPLICATION_JSON})
 public class TikaResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TikaResource.class);

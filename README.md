@@ -8,8 +8,8 @@ framework.
 To start the server:
    
 	$> cd dropwizard-extruder
-	$> make exec
-	mvn compile exec:java
+	$> make build
+	$> java -jar target/extruder-1.0-SNAPSHOT.jar server
 	...
 	INFO  [2013-08-30 12:49:12,184] org.eclipse.jetty.server.AbstractConnector: Started InstrumentedBlockingChannelConnector@0.0.0.0:8080
 	INFO  [2013-08-30 12:49:12,189] org.eclipse.jetty.server.AbstractConnector: Started SocketConnector@0.0.0.0:8081
@@ -25,6 +25,8 @@ And then you can pass it URLs as `GET` parameters:
 By default the server will return HTML but if you pass an `Accept:
 application/json` header you'll get a big old blob of JSON instead.
 
+	$> curl -H 'Accept:application/json' 'http://localhost:8080/boilerpipe?url=SOME_URL'
+
 Notes
 --
 
@@ -32,10 +34,18 @@ Notes
   to fumble my way around this foreign land. For example, the correct `mvn`
   commands for building a standalone server that runs in the background.
 
+* You can also type `make exec` to recompile the code and launch the server in
+  foreground mode, which is useful for debugging things.
+
 * The text/content extraction is pretty heavy-handed and relies on the
   underlying libraries to do the right thing. Currently everything returns
   blocks of plain text so things like lists and code samples will probably be
   mangled. This is not ideal but that stuff is meant to be handled going forward.
+
+* There is a separate branch called `local-files` which allows you to upload
+  files as HTTP `POST` blobs. Currently it works fine when the server is started
+  using `make exec` (see above) but fails completely when run as a stand-alone
+  jar file. This appears to be a `maven-shade` thing but ... uh, Java?
 
 * If you look carefully at the URLs above and the actual classes that define the
   functionality they all look basically the same save for the names of the
@@ -45,21 +55,17 @@ Notes
 
 * There is also a [separate
 branch](https://github.com/straup/dropwizard-extruder/tree/snacktory) that uses
-the `snacktory` readability clone but it has not been merged in to master yet.
+the `snacktory` readability clone but it has not been merged in to master yet. I
+can't remember why except that I was having trouble getting it to work and
+decided to try the `java-readability` library instead.
 
 To do
 --
 
 Aside from stuff listed in the [TODO.txt](TODO.txt} file:
 
-* Make POST-ing local files work when a jar file is created by `maven-shade`. It
-  works fine when you run `make exec` because ... Java? POSTs have been disabled
-  in the `master` branch but are enabled in the `post` branch until I figure out
-  what's going on. 
-
-* UTF-8 headers
-
 * Health checks
+* A resource endpoint that calls the actual Readability API
 
 See also
 --

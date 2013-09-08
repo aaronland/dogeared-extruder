@@ -34,7 +34,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Path(value = "/java-readability")
-@Produces({MediaType.TEXT_HTML, MediaType.APPLICATION_JSON})
+@Produces({MediaType.TEXT_HTML + "; charset=UTF-8", MediaType.APPLICATION_JSON})
 public class JavaReadabilityResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JavaReadabilityResource.class);
