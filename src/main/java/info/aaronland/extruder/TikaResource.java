@@ -200,7 +200,7 @@ public class TikaResource {
 
 	for (Object obj : paras) {
 	    sb.append(obj.toString());
-	    sb.append("\n\n");
+	    sb.append("\n");
 	}
 
 	return sb.toString();
