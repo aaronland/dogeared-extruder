@@ -71,7 +71,10 @@ To do
 
 Aside from stuff listed in the [TODO.txt](TODO.txt) file:
 
-* Extract or generate a page title for HTML output
+* Try to be smarter about extracting or generating a page title for HTML
+ output. Currently the code does not try to parse HTML input for title and
+ simply parrots the basename of the input URL and/or relies on Tika's internal
+ metadata parser.
 * A resource endpoint that calls the `readability.com` API
 
 See also
