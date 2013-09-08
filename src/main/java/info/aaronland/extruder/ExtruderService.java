@@ -25,6 +25,7 @@ public class ExtruderService extends Service<ExtruderConfiguration> {
         env.addResource(new BoilerpipeResource());
         env.addResource(new TikaResource());
         env.addResource(new JavaReadabilityResource());
+	//env.addHealthCheck(new InternetsHealthCheck());
     }
 
 }
