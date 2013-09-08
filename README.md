@@ -25,11 +25,11 @@ And then you can pass it URLs as `GET` parameters:
 
 It also supports local files via `POST` uploads:
 
-	$> curl -X POST -F "file=SOME_FILE.html" http://localhost:8080/boilerpipe
+	$> curl -X POST -F "file=@SOME_FILE.html" http://localhost:8080/boilerpipe
 
-	$> curl -X POST -F "file=SOME_FILE.html" http://localhost:8080/java-readability
+	$> curl -X POST -F "file=@SOME_FILE.html" http://localhost:8080/java-readability
 
-	$> curl -X POST -F "file=SOME_FILE.pdf" http://localhost:8080/tika 
+	$> curl -X POST -F "file=@SOME_FILE.pdf" http://localhost:8080/tika 
 
 By default the server will return HTML but if you pass an `Accept:
 application/json` header you'll get a big old blob of JSON instead.
@@ -50,11 +50,6 @@ Notes
   underlying libraries to do the right thing. Currently everything returns
   blocks of plain text so things like lists and code samples will probably be
   mangled. This is not ideal but that stuff is meant to be handled going forward.
-
-* There is a separate branch called `local-files` which allows you to upload
-  files as HTTP `POST` blobs. Currently it works fine when the server is started
-  using `make exec` (see above) but fails completely when run as a stand-alone
-  jar file. This appears to be a `maven-shade` thing but ... uh, Java?
 
 * If you look carefully at the URLs above and the actual classes that define the
   functionality they all look basically the same save for the names of the
