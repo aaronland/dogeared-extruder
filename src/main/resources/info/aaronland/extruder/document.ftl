@@ -23,4 +23,4 @@
       </#list>  
     </body>
 </html>
-<#-- -*- coding: itf-8 -*- -->
+<#-- -*- coding: utf-8 -*- -->
