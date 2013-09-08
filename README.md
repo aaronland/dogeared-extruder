@@ -65,8 +65,7 @@ To do
 
 Aside from stuff listed in the [TODO.txt](TODO.txt) file:
 
-* Health checks
-* A resource endpoint that calls the actual Readability API
+* A resource endpoint that calls the `readability.com` API
 
 See also
 --
