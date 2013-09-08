@@ -149,13 +149,8 @@ public class TikaResource {
 	String title;
 
 	Parser parser = new AutoDetectParser();
-	ContentHandler handler = new BodyContentHandler();
-	    
+	ContentHandler handler = new BodyContentHandler();	   
 	Metadata metadata = new Metadata();
-
-	for(String s : metadata.names()) {
-	    LOGGER.info("Metadata name : "  + s);
-	}
 
 	try {
 	    parser.parse(buffer, handler, metadata, new ParseContext());
@@ -168,7 +163,25 @@ public class TikaResource {
 	text = handler.toString();
 	text = unwrapText(text);
 
-	title = "FIX ME";
+	// http://www.celinio.net/techblog/?p=1295
+	title = metadata.get(Metadata.TITLE);
+
+	if (title == null){
+
+	    String type = "mystery";
+
+	    try {
+		String content_type = metadata.get(Metadata.CONTENT_TYPE);
+		String[] parts = content_type.split("/");	    
+		type = parts[1];
+	    }
+
+	    catch (Exception e){
+		LOGGER.info("Failed to parse content type because " + e.toString());
+	    }
+
+	    title = "Untitled " + type.toUpperCase() + " Document #" + System.currentTimeMillis();
+	}
 
 	return new Document(text, title);
     }
