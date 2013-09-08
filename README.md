@@ -61,6 +61,11 @@ decided to try the `java-readability` library instead.
 * You can also type `make exec` to recompile the code and launch the server in
   foreground mode, which is useful for debugging things.
 
+Dependencies
+--
+
+* You will need to have [maven](https://maven.apache.org/what-is-maven.html) installed to manage the build process.
+
 To do
 --
 
