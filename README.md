@@ -9,8 +9,9 @@ To start the server:
    
 	$> cd dropwizard-extruder
 	$> make build
+	... JAVA STUFF ...
 	$> java -jar target/extruder-1.0-SNAPSHOT.jar server
-	...
+	... MOAR JAVA STUFF ...
 	INFO  [2013-08-30 12:49:12,184] org.eclipse.jetty.server.AbstractConnector: Started InstrumentedBlockingChannelConnector@0.0.0.0:8080
 	INFO  [2013-08-30 12:49:12,189] org.eclipse.jetty.server.AbstractConnector: Started SocketConnector@0.0.0.0:8081
 
@@ -62,7 +63,7 @@ decided to try the `java-readability` library instead.
 To do
 --
 
-Aside from stuff listed in the [TODO.txt](TODO.txt} file:
+Aside from stuff listed in the [TODO.txt](TODO.txt) file:
 
 * Health checks
 * A resource endpoint that calls the actual Readability API
