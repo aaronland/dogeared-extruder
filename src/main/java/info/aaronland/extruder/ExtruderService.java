@@ -6,7 +6,8 @@ import com.yammer.dropwizard.config.Environment;
 import com.yammer.dropwizard.views.ViewBundle;
 
 import info.aaronland.extruder.ExtruderConfiguration;
-import info.aaronland.extruder.BoilerpipeResource;
+
+import java.net.URL;
 
 public class ExtruderService extends Service<ExtruderConfiguration> {
 
@@ -25,6 +26,10 @@ public class ExtruderService extends Service<ExtruderConfiguration> {
         env.addResource(new BoilerpipeResource());
         env.addResource(new TikaResource());
         env.addResource(new JavaReadabilityResource());
+
+	// TODO: put me in the config file... (20130908/straup)
+	URL healthcheck_url = new URL("http://collection.cooperhewitt.org/objects/random/");
+	env.addHealthCheck(new InternetsHealthCheck(healthcheck_url));
     }
 
 }

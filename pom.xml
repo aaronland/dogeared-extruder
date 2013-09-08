@@ -27,6 +27,12 @@
       </dependency>
 
       <dependency>
+        <groupId>com.yammer.metrics</groupId>
+        <artifactId>metrics-core</artifactId>
+        <version>2.2.0</version>
+      </dependency>
+
+      <dependency>
         <groupId>com.sun.jersey.contribs</groupId>
         <artifactId>jersey-multipart</artifactId>
 	<!-- this is important and needs to be in sync with the jersey defined in -->
