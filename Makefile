@@ -1,4 +1,5 @@
 exec:
+	mvn clean
 	mvn compile exec:java
 
 build: todo

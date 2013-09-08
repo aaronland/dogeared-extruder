@@ -1,6 +1,7 @@
-<#-- @ftlvariable name="" type="info.aaronland.extruder.DocumentView" -->
+<!DOCTYPE html> 
 <html>
   <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title><#-- please fix me --></title>
     <style type="text/css">
       body {
@@ -12,17 +13,14 @@
 
       p {
       margin-bottom:2em;
+      text-indent: 4em;
       }
     </style>
   </head>
     <body>
-      <#-- no really... so... dumb... -->
-      <#-- http://stackoverflow.com/questions/3864022/freemarker-assign-list-length-to-local-variable -->					 
-      <#assign i = document.getBlocks()?size>
-
       <#list document.getBlocks() as p>
 	<p>${p?html}</p>
       </#list>  
-	
     </body>
 </html>
+<#-- -*- coding: itf-8 -*- -->
