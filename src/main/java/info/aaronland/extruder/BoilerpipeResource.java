@@ -30,6 +30,8 @@ import org.slf4j.LoggerFactory;
 import de.l3s.boilerpipe.extractors.DefaultExtractor;
 import de.l3s.boilerpipe.extractors.ArticleExtractor;
 
+import org.apache.commons.io.FilenameUtils;
+
 @Path(value = "/boilerpipe")
 @Produces({MediaType.TEXT_HTML + "; charset=UTF-8", MediaType.APPLICATION_JSON})
 public class BoilerpipeResource {
@@ -93,6 +95,7 @@ public class BoilerpipeResource {
 
 	URL url;
 	String text;
+	String title;
 
 	try {
 	    url = new URL(uri);
@@ -104,13 +107,14 @@ public class BoilerpipeResource {
 
 	try {
 	    text = ArticleExtractor.INSTANCE.getText(url);
+	    title = FilenameUtils.getBaseName(url.toString());
 	}
 
 	catch (Exception e){
 	    throw new RuntimeException(e);
 	}
 
-	return new Document(text);
+	return new Document(text, title);
     }
 
 }

@@ -25,6 +25,7 @@ import java.io.File;
 import java.net.URL;
 
 import com.basistech.readability.Readability;
+import org.apache.commons.io.FilenameUtils;
 
 // See below inre: Readers (20130901/straup)
 import com.basistech.readability.HttpPageReader;
@@ -91,8 +92,9 @@ public class JavaReadabilityResource {
 
     private Document extrudeThis(String uri){
 
-	URL url = null;
-	String text = "";
+	URL url;
+	String text;
+	String title;
 
 	try {
 	    url = new URL(uri);
@@ -124,13 +126,15 @@ public class JavaReadabilityResource {
 
 	    parser.processDocument(path);
 	    text = parser.getArticleText();
+
+	    title = FilenameUtils.getBaseName(url.toString());
 	}
 
 	catch (Exception e){
 	    throw new RuntimeException(e);
-	}
-	
-	return new Document(text);
+	}       
+
+	return new Document(text, title);
     }
 
 }

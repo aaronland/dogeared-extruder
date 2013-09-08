@@ -42,6 +42,8 @@ import org.apache.tika.parser.Parser;
 import org.apache.tika.sax.BodyContentHandler;
 import org.xml.sax.ContentHandler;
 
+import org.apache.commons.io.FilenameUtils;
+
 @Path(value = "/tika")
 @Produces({MediaType.TEXT_HTML + "; charset=UTF-8", MediaType.APPLICATION_JSON})
 public class TikaResource {
@@ -142,11 +144,18 @@ public class TikaResource {
     // (20130901/straup)
 
     private Document extrudeThis(InputStream buffer){
-		
+
+	String text;
+	String title;
+
 	Parser parser = new AutoDetectParser();
 	ContentHandler handler = new BodyContentHandler();
 	    
 	Metadata metadata = new Metadata();
+
+	for(String s : metadata.names()) {
+	    LOGGER.info("Metadata name : "  + s);
+	}
 
 	try {
 	    parser.parse(buffer, handler, metadata, new ParseContext());
@@ -156,10 +165,12 @@ public class TikaResource {
 	    throw new RuntimeException(e);
 	}
 
-	String text = handler.toString();
+	text = handler.toString();
 	text = unwrapText(text);
 
-	return new Document(text);
+	title = "FIX ME";
+
+	return new Document(text, title);
     }
 
     // Not awesome. No. (20130903/straup)

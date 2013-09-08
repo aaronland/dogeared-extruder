@@ -14,15 +14,19 @@ public class Document {
     private static final Logger LOGGER = LoggerFactory.getLogger(Document.class);
 
     private ArrayList<String> blocks;
+    private String title;
 
-    // TO DO: make URI an optional parameter
-
-    public Document(String text){
-	blocks = parseText(text);
+    public Document(String doc_text, String doc_title){
+	blocks = parseText(doc_text);
+	title = doc_title;
     }
 
     public ArrayList<String> getBlocks(){
 	return this.blocks;
+    }
+
+    public String getTitle(){
+	return this.title;
     }
 
     public String toString(){
