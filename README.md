@@ -39,12 +39,7 @@ application/json` header you'll get a big old blob of JSON instead.
 Notes
 --
 
-* It basically works at the moment but I am not a Java person so I am still trying
-  to fumble my way around this foreign land. For example, the correct `mvn`
-  commands for building a standalone server that runs in the background.
-
-* You can also type `make exec` to recompile the code and launch the server in
-  foreground mode, which is useful for debugging things.
+* It works but I am not a Java person so I am still fumbling my way around this foreign land.
 
 * The text/content extraction is pretty heavy-handed and relies on the
   underlying libraries to do the right thing. Currently everything returns
@@ -62,6 +57,9 @@ branch](https://github.com/straup/dropwizard-extruder/tree/snacktory) that uses
 the `snacktory` readability clone but it has not been merged in to master yet. I
 can't remember why except that I was having trouble getting it to work and
 decided to try the `java-readability` library instead.
+
+* You can also type `make exec` to recompile the code and launch the server in
+  foreground mode, which is useful for debugging things.
 
 To do
 --
