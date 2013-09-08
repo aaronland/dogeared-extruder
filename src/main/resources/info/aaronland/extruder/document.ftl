@@ -13,7 +13,6 @@
 
       p {
       margin-bottom:2em;
-      text-indent: 4em;
       }
     </style>
   </head>
