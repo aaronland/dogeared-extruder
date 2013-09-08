@@ -68,6 +68,7 @@ To do
 
 Aside from stuff listed in the [TODO.txt](TODO.txt) file:
 
+* Extract or generate a page title for HTML output
 * A resource endpoint that calls the `readability.com` API
 
 See also

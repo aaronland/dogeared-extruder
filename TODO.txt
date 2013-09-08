@@ -1,4 +1,4 @@
-# Generated automatically at Sun Sep 8 13:56:05 EDT 2013
+# Generated automatically at Sun Sep 8 14:04:13 EDT 2013
 
 ./src/main/java/com/basistech/readability/Readability.java:93:        // TODO: reset the results.
 ./src/main/java/com/basistech/readability/Readability.java:368:         * http://www.peachpit.com/articles/article.aspx?p=31567&seqNum=5 TODO: Shouldn't this be a reverse
