@@ -148,6 +148,8 @@ public class TikaResource {
 	String text;
 	String title;
 
+	// http://stackoverflow.com/questions/6144708/apache-tika-and-character-limit-when-parsing-documents 
+
 	Parser parser = new AutoDetectParser();
 	ContentHandler handler = new BodyContentHandler();	   
 	Metadata metadata = new Metadata();
