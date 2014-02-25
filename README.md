@@ -1,4 +1,4 @@
-dropwizard-extruder
+dogeared-extruder
 ==
 
 This is a meant to be a simple HTTP Pony to wrap the `boilerpipe` and `Tika` and
@@ -7,7 +7,7 @@ framework.
 
 To start the server:
    
-	$> cd dropwizard-extruder
+	$> cd dogeared-extruder
 	$> make build
 	... JAVA STUFF ...
 	$> java -jar target/extruder-1.0.jar server
@@ -53,7 +53,7 @@ Notes
   sorted out.
 
 * There is also a [separate
-branch](https://github.com/straup/dropwizard-extruder/tree/snacktory) that uses
+branch](https://github.com/straup/dogeared-extruder/tree/snacktory) that uses
 the `snacktory` readability clone but it has not been merged in to master yet. I
 can't remember why except that I was having trouble getting it to work and
 decided to try the `java-readability` library instead.

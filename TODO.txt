@@ -1,10 +1,10 @@
-# Generated automatically at Sun Sep 8 15:28:54 EDT 2013
+# Generated automatically at Tue Feb 25 13:58:20 CET 2014
 
+./src/main/java/info/aaronland/extruder/ExtruderService.java:30:	// TODO: put me in the config file... (20130908/straup)
+./src/main/java/info/aaronland/extruder/BoilerpipeResource.java:52:	// TODO: trap MalformedURLExceptions and return NOT_ACCEPTABLE here (20130901/straup)
+./src/main/java/info/aaronland/extruder/JavaReadabilityResource.java:54:	// TODO: trap MalformedURLExceptions and return NOT_ACCEPTABLE here (20130901/straup)
 ./src/main/java/com/basistech/readability/Readability.java:93:        // TODO: reset the results.
 ./src/main/java/com/basistech/readability/Readability.java:368:         * http://www.peachpit.com/articles/article.aspx?p=31567&seqNum=5 TODO: Shouldn't this be a reverse
 ./src/main/java/com/basistech/readability/Readability.java:686:         * at the same time without effecting the traversal. TODO: Consider taking into account original
-./src/main/java/info/aaronland/extruder/BoilerpipeResource.java:52:	// TODO: trap MalformedURLExceptions and return NOT_ACCEPTABLE here (20130901/straup)
-./src/main/java/info/aaronland/extruder/ExtruderService.java:30:	// TODO: put me in the config file... (20130908/straup)
-./src/main/java/info/aaronland/extruder/JavaReadabilityResource.java:54:	// TODO: trap MalformedURLExceptions and return NOT_ACCEPTABLE here (20130901/straup)
-./src/main/java/info/aaronland/extruder/TikaResource.java:140:    // TO DO: figure out how to make this return HTML instead of text
 ./src/main/java/info/aaronland/extruder/Upload.java:20:	// TO DO: sort out file extensions etc.
+./src/main/java/info/aaronland/extruder/TikaResource.java:140:    // TO DO: figure out how to make this return HTML instead of text
