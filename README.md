@@ -80,6 +80,8 @@ Aside from stuff listed in the [TODO.txt](TODO.txt) file:
 See also
 --
 
+* [dogeared-www](https://github.com/straup/dogeared-www)
+* [dogeared-search](https://github.com/straup/dogeared-search)
 * http://code.google.com/p/boilerpipe/
 * https://tika.apache.org/
 * https://github.com/basis-technology-corp/Java-readability
