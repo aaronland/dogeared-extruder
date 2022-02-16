@@ -11,7 +11,7 @@ public class InternetsHealthCheck extends HealthCheck {
     private URL url;
 
     public InternetsHealthCheck(URL url) {
-        super("InternetsHealthCheck");
+        super();
 	this.url = url;
     }
 

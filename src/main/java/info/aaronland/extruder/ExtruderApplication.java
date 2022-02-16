@@ -17,15 +17,15 @@ public class ExtruderApplication extends Application<ExtruderConfiguration> {
 
     @Override
 	public void initialize(Bootstrap<ExtruderConfiguration> bootstrap) {
-        bootstrap.setName("extruder");
+        // bootstrap.setName("extruder");
 	bootstrap.addBundle(new ViewBundle());
     }
 
     @Override
 	public void run(ExtruderConfiguration conf, Environment env) throws Exception {
-        env.addResource(new BoilerpipeResource());
-        env.addResource(new TikaResource());
-        env.addResource(new JavaReadabilityResource());
+        env.jersey().register(new BoilerpipeResource());
+        env.jersey().register(new TikaResource());
+        env.jersey().register(new JavaReadabilityResource());
 
 	// TODO: put me in the config file... (20130908/straup)
 	URL healthcheck_url = new URL("http://collection.cooperhewitt.org/objects/random/");

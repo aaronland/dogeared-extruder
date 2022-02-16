@@ -3,9 +3,9 @@ package info.aaronland.extruder;
 import info.aaronland.extruder.Document;
 import io.dropwizard.views.View;
 
-import com.google.common.base.Charsets;
-import com.google.common.base.Optional;
-import java.nio.charset.Charset;
+//import com.google.common.base.Charsets;
+//import com.google.common.base.Optional;
+//import java.nio.charset.Charset;
 
 public class DocumentView extends View {
     private final Document document;
@@ -24,8 +24,8 @@ public class DocumentView extends View {
     // And since the default encoding for en-us is ISO-8859-1... good times
     // (20130908/straup)
 
-    public Optional<Charset> getCharset(){
-	return Optional.of(Charsets.UTF_8);
-    }
+    //public Optional<Charset> getCharset(){
+    //return Optional.of(Charsets.UTF_8);
+    // }
 
 }
