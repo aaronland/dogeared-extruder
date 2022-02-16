@@ -17,7 +17,6 @@ public class ExtruderApplication extends Application<ExtruderConfiguration> {
 
     @Override
 	public void initialize(Bootstrap<ExtruderConfiguration> bootstrap) {
-        // bootstrap.setName("extruder");
 	bootstrap.addBundle(new ViewBundle());
     }
 

@@ -54,7 +54,6 @@
         <groupId>org.apache.tika</groupId>
         <artifactId>tika-core</artifactId>
         <version>2.3.0</version>
-	<!-- <version>1.22</version> -->
       </dependency>
 
       <dependency>
@@ -64,6 +63,12 @@
 	<type>pom</type>	
       </dependency>
 
+      <dependency>
+	<groupId>org.apache.tika</groupId>
+	<artifactId>tika-parsers-standard-package</artifactId>
+	<version>2.3.0</version>
+      </dependency>
+      
       <!-- Misc dependencies -->
 
       <dependency>
