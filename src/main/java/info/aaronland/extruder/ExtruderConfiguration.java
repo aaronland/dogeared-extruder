@@ -1,6 +1,6 @@
 package info.aaronland.extruder;
 
-import com.yammer.dropwizard.config.Configuration;
+import io.dropwizard.Configuration;
 
 import javax.validation.Valid;
 

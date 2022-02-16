@@ -1,18 +1,18 @@
 package info.aaronland.extruder;
 
-import com.yammer.dropwizard.Service;
-import com.yammer.dropwizard.config.Bootstrap;
-import com.yammer.dropwizard.config.Environment;
-import com.yammer.dropwizard.views.ViewBundle;
+import io.dropwizard.Application;
+import io.dropwizard.setup.Bootstrap;
+import io.dropwizard.setup.Environment;
+import io.dropwizard.views.ViewBundle;
 
 import info.aaronland.extruder.ExtruderConfiguration;
 
 import java.net.URL;
 
-public class ExtruderService extends Service<ExtruderConfiguration> {
+public class ExtruderApplication extends Application<ExtruderConfiguration> {
 
     public static void main(String[] args) throws Exception {
-        new ExtruderService().run(args);
+        new ExtruderApplication().run(args);
     }
 
     @Override

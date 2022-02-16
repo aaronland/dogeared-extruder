@@ -1,7 +1,7 @@
 package info.aaronland.extruder;
 
 import info.aaronland.extruder.Document;
-import com.yammer.dropwizard.views.View;
+import io.dropwizard.views.View;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Optional;
