@@ -18,14 +18,11 @@ RUN mkdir -p /usr/share/maven /usr/share/maven/ref \
   && rm -f /tmp/apache-maven.tar.gz \
   && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
 
-
 COPY . /usr/src/dogeared-extruder
 
 WORKDIR /usr/src/dogeared-extruder
 
 RUN mvn clean && mvn install
-
-FROM openjdk:17-slim
 
 FROM openjdk:17-slim
 

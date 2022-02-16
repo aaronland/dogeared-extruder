@@ -5,6 +5,20 @@ This is a meant to be a simple HTTP Pony to wrap the `boilerpipe` and `Tika` and
 clones of the `readability` text extraction libraries using the `dropwizard`
 framework.
 
+Important
+--
+
+This package was not updated between May 2014 and February 2022.
+
+There is a [v2 branch](https://github.com/aaronland/dogeared-extruder/tree/v2) for this package with up-to-date dependencies.
+Unfortunately, some of those dependencies contain changes that need to be accounted for in this package's code. That
+work is underway. Any help or suggestions would be appreciated.
+
+In the meantime, known security vulnerabilities for older dependencies have been addressed.
+
+Quick start
+--
+
 To start the server:
    
 	$> cd dogeared-extruder
@@ -64,7 +78,34 @@ decided to try the `java-readability` library instead.
 Dependencies
 --
 
-* You will need to have [maven](https://maven.apache.org/what-is-maven.html) installed to manage the build process.
+* You will need to have [maven](https://maven.apache.org/what-is-maven.html) installed to manage the build process. Or you can use the `Dockerfile` included with this package (assuming you have Docker installed).
+
+Docker
+--
+
+```
+$> docker build -t dogeared-extruder .
+
+$> docker run -it -p 8080:8080 dogeared-extruder java -jar /usr/local/jar/dogeared-extruder.jar server
+INFO  [2022-02-16 02:09:14,077] com.yammer.dropwizard.cli.ServerCommand: Starting extruder
+INFO  [2022-02-16 02:09:14,079] org.eclipse.jetty.server.Server: jetty-8.y.z-SNAPSHOT
+INFO  [2022-02-16 02:09:14,148] com.sun.jersey.server.impl.application.WebApplicationImpl: Initiating Jersey application, version 'Jersey: 1.17.1 02/28/2013 12:47 PM'
+INFO  [2022-02-16 02:09:14,182] com.yammer.dropwizard.config.Environment: The following paths were found for the configured resources:
+
+    GET     /boilerpipe (info.aaronland.extruder.BoilerpipeResource)
+    POST    /boilerpipe (info.aaronland.extruder.BoilerpipeResource)
+    GET     /tika (info.aaronland.extruder.TikaResource)
+    POST    /tika (info.aaronland.extruder.TikaResource)
+    GET     /java-readability (info.aaronland.extruder.JavaReadabilityResource)
+    POST    /java-readability (info.aaronland.extruder.JavaReadabilityResource)
+
+INFO  [2022-02-16 02:09:14,182] com.yammer.dropwizard.config.Environment: tasks = 
+
+    POST    /tasks/gc (com.yammer.dropwizard.tasks.GarbageCollectionTask)
+
+INFO  [2022-02-16 02:09:14,325] org.eclipse.jetty.server.AbstractConnector: Started InstrumentedBlockingChannelConnector@0.0.0.0:8080
+INFO  [2022-02-16 02:09:14,328] org.eclipse.jetty.server.AbstractConnector: Started SocketConnector@0.0.0.0:8081
+```
 
 To do
 --
