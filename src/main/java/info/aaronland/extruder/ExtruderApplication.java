@@ -28,8 +28,9 @@ public class ExtruderApplication extends Application<ExtruderConfiguration> {
         env.jersey().register(new JavaReadabilityResource());
 
 	// TODO: put me in the config file... (20130908/straup)
-	URL healthcheck_url = new URL("http://collection.cooperhewitt.org/objects/random/");
-	env.addHealthCheck(new InternetsHealthCheck(healthcheck_url));
+	URL healthcheck_url = new URL("https://github.com/aaronland/dogeared-extruder/");
+	
+	env.healthChecks().register("internets", new InternetsHealthCheck(healthcheck_url));
     }
 
 }

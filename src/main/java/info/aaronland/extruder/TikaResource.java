@@ -35,6 +35,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.apache.tika.exception.TikaException;
+import org.apache.tika.metadata.TikaCoreProperties;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;
 import org.apache.tika.parser.ParseContext;
@@ -165,15 +166,14 @@ public class TikaResource {
 	text = handler.toString();
 	text = unwrapText(text);
 
-	// http://www.celinio.net/techblog/?p=1295
-	title = metadata.get(Metadata.TITLE);
+	title = metadata.get(TikaCoreProperties.TITLE);
 
 	if (title == null){
 
 	    String type = "mystery";
 
 	    try {
-		String content_type = metadata.get(Metadata.CONTENT_TYPE);
+		String content_type = metadata.get(TikaCoreProperties.CONTENT_TYPE_HINT);
 		String[] parts = content_type.split("/");	    
 		type = parts[1];
 	    }

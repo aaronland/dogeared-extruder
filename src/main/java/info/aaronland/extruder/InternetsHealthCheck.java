@@ -1,6 +1,5 @@
 package info.aaronland.extruder;
 
-// import io.dropwizard.metrics.health.HealthCheck;
 import com.codahale.metrics.health.HealthCheck;
 
 import java.net.URL;
