@@ -174,7 +174,7 @@ public abstract class XmlDataMap {
         assert splitPoint > 0;
         OffsetRange range = offsetRanges.get(rangePoint);
         assert splitPoint < range.getText().text().length();
-        TextNode newText = new TextNode(range.getText().text().substring(splitPoint), null);
+        TextNode newText = new TextNode(range.getText().text().substring(splitPoint));
         range.getText().text(range.getText().text().substring(0, splitPoint));
         OffsetRange newRange = new OffsetRange(range.getStart() + splitPoint, range.getEnd(), newText);
         offsetRanges.add(rangePoint + 1, newRange);
