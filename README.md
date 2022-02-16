@@ -12,12 +12,13 @@ This package was not updated between May 2014 and February 2022. That means that
 every other package that this one depends on is out of date and many have security vulnerabilities
 that have since been addressed.
 
-There is a `v2` branch for this package with up-to-date dependencies. Unfortunately, some of
-those dependencies contain changes that need to be accounted for in this package's code. That
+There is a [v2 branch](https://github.com/aaronland/dogeared-extruder/tree/v2) for this package with up-to-date dependencies.
+Unfortunately, some of those dependencies contain changes that need to be accounted for in this package's code. That
 work is underway. Any help or suggestions would be appreciated.
 
 If you are using this version (anything before version 2.0) you should do so with care and
-understanding that it may not be safe. Buyer beware.
+understanding that it may not be safe. Some of the more serious issues have been addressed with patched (but not necessarily
+current) versions but a few still remain. Buyer beware.
 
 Quick start
 --
