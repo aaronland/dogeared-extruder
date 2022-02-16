@@ -31,15 +31,13 @@
         <artifactId>metrics-core</artifactId>
         <version>4.2.8</version>
       </dependency>
-
+      
       <dependency>
-        <groupId>com.sun.jersey.contribs</groupId>
-        <artifactId>jersey-multipart</artifactId>
-	<!-- this is important and needs to be in sync with the jersey defined in -->
-	<!-- https://github.com/codahale/dropwizard/blob/master/pom.xml -->
-        <version>1.19.4</version>
-      </dependency>   
-
+	<groupId>org.glassfish.jersey.media</groupId>
+	<artifactId>jersey-media-multipart</artifactId>
+	<version>3.0.4</version>
+      </dependency>
+      
       <!-- boilerpipe stuff -->
 
       <dependency>

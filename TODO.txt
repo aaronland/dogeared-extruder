@@ -1,4 +1,4 @@
-# Generated automatically at Wed Feb 16 09:26:11 PST 2022
+# Generated automatically at Wed Feb 16 09:52:03 PST 2022
 
 ./src/main/java/info/aaronland/extruder/JavaReadabilityResource.java:54:	// TODO: trap MalformedURLExceptions and return NOT_ACCEPTABLE here (20130901/straup)
 ./src/main/java/info/aaronland/extruder/BoilerpipeResource.java:52:	// TODO: trap MalformedURLExceptions and return NOT_ACCEPTABLE here (20130901/straup)
