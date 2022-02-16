@@ -18,11 +18,6 @@ RUN mkdir -p /usr/share/maven /usr/share/maven/ref \
   && rm -f /tmp/apache-maven.tar.gz \
   && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
 
-ENV MAVEN_HOME /usr/share/maven
-ENV MAVEN_CONFIG "$USER_HOME_DIR/.m2"
-
-# COPY mvn-entrypoint.sh /usr/local/bin/mvn-entrypoint.sh
-# COPY settings-docker.xml /usr/share/maven/ref/
 
 COPY . /usr/src/dogeared-extruder
 
@@ -30,5 +25,10 @@ WORKDIR /usr/src/dogeared-extruder
 
 RUN mvn clean && mvn install
 
-# FROM openjdk:17-slim
+FROM openjdk:17-slim
 
+FROM openjdk:17-slim
+
+RUN mkdir /usr/local/jar
+
+COPY --from=builder /usr/src/dogeared-extruder/target/extruder-2.0.jar /usr/local/jar/dogeared-extruder.jar
