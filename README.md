@@ -24,7 +24,7 @@ To start the server:
 	$> cd dogeared-extruder
 	$> make build
 	... JAVA STUFF ...
-	$> java -jar target/extruder-1.0.jar server
+	$> java -jar target/extruder-1.1.jar server
 	... MOAR JAVA STUFF ...
 	INFO  [2013-08-30 12:49:12,184] org.eclipse.jetty.server.AbstractConnector: Started InstrumentedBlockingChannelConnector@0.0.0.0:8080
 	INFO  [2013-08-30 12:49:12,189] org.eclipse.jetty.server.AbstractConnector: Started SocketConnector@0.0.0.0:8081
@@ -65,12 +65,6 @@ Notes
   extraction tools. For the time being I think the classes (and URLs) should
   remain separate if only to keep things simple(r) while everything else is
   sorted out.
-
-* There is also a [separate
-branch](https://github.com/straup/dogeared-extruder/tree/snacktory) that uses
-the `snacktory` readability clone but it has not been merged in to master yet. I
-can't remember why except that I was having trouble getting it to work and
-decided to try the `java-readability` library instead.
 
 * You can also type `make exec` to recompile the code and launch the server in
   foreground mode, which is useful for debugging things.
@@ -121,9 +115,6 @@ Aside from stuff listed in the [TODO.txt](TODO.txt) file:
 See also
 --
 
-* [dogeared-www](https://github.com/straup/dogeared-www)
-* [dogeared-search](https://github.com/straup/dogeared-search)
 * http://code.google.com/p/boilerpipe/
 * https://tika.apache.org/
 * https://github.com/basis-technology-corp/Java-readability
-* https://github.com/karussell/snacktory
