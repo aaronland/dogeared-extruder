@@ -16,9 +16,9 @@ There is a [v2 branch](https://github.com/aaronland/dogeared-extruder/tree/v2) f
 Unfortunately, some of those dependencies contain changes that need to be accounted for in this package's code. That
 work is underway. Any help or suggestions would be appreciated.
 
-If you are using this version (anything before version 2.0) you should do so with care and
+If you are using this version (anything before version 2.0) you should do so with care and the
 understanding that it may not be safe. Some of the more serious issues have been addressed with patched (but not necessarily
-current) versions but a few still remain. Buyer beware.
+current) versions but [a few still remain](https://github.com/straup/dogeared-extruder/security/dependabot). Buyer beware.
 
 Quick start
 --
