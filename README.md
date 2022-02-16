@@ -17,7 +17,8 @@ those dependencies contain changes that need to be accounted for in this package
 work is underway. Any help or suggestions would be appreciated.
 
 If you are using this version (anything before version 2.0) you should do so with care and
-understanding that it may not be safe. Buyer beware.
+understanding that it may not be safe. [Some of the outstanding security issues in this package's dependencies
+re very serious](https://github.com/straup/dogeared-extruder/security/dependabot). Buyer beware.
 
 Quick start
 --
