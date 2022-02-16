@@ -76,6 +76,12 @@
 	<artifactId>jaxb-api</artifactId>
 	<version>2.3.1</version>
       </dependency>
+
+      <dependency>
+	<groupId>javax.mail</groupId>
+	<artifactId>javax.mail-api</artifactId>
+	<version>1.6.2</version>
+      </dependency>
       
       <dependency>
 	<groupId>org.apache.commons</groupId>
@@ -150,7 +156,7 @@
 		<transformers>
                   <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                   <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-		    <mainClass>info.aaronland.extruder.ExtruderService</mainClass>
+		    <mainClass>info.aaronland.extruder.ExtruderApplication</mainClass>
                   </transformer>
 		</transformers>
 		<!-- http://stackoverflow.com/questions/999489/invalid-signature-file-when-attempting-to-run-a-jar -->
