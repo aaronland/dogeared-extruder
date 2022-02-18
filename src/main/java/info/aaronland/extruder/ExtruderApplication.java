@@ -8,6 +8,7 @@ import io.dropwizard.views.ViewBundle;
 import info.aaronland.extruder.ExtruderConfiguration;
 
 import java.net.URL;
+import java.util.Map;
 
 public class ExtruderApplication extends Application<ExtruderConfiguration> {
 
@@ -15,9 +16,16 @@ public class ExtruderApplication extends Application<ExtruderConfiguration> {
         new ExtruderApplication().run(args);
     }
 
-    @Override
-	public void initialize(Bootstrap<ExtruderConfiguration> bootstrap) {
-	bootstrap.addBundle(new ViewBundle());
+    
+    public void initialize(Bootstrap<ExtruderConfiguration> bootstrap) {
+	
+	bootstrap.addBundle(new ViewBundle<ExtruderConfiguration>(){
+
+		@Override
+		public Map<String, Map<String, String>> getViewConfiguration(ExtruderConfiguration config) {
+		    return config.getViewRendererConfiguration();
+		}
+	    });
     }
 
     @Override

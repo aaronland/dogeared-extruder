@@ -50,7 +50,7 @@ import org.apache.commons.io.FilenameUtils;
 public class TikaResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TikaResource.class);
-
+    
     @GET
     public Response extrudeThisUrl(@QueryParam("url") String uri){
 
@@ -145,7 +145,7 @@ public class TikaResource {
     // (20130901/straup)
 
     private Document extrudeThis(InputStream buffer){
-
+	    
 	String text;
 	String title;
 
