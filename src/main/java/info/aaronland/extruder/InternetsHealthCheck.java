@@ -1,6 +1,6 @@
 package info.aaronland.extruder;
 
-import com.yammer.metrics.core.HealthCheck;
+import com.codahale.metrics.health.HealthCheck;
 
 import java.net.URL;
 import java.net.HttpURLConnection;
@@ -10,7 +10,7 @@ public class InternetsHealthCheck extends HealthCheck {
     private URL url;
 
     public InternetsHealthCheck(URL url) {
-        super("InternetsHealthCheck");
+        super();
 	this.url = url;
     }
 

@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>${document.getTitle()?html}</title>
+    <title>${document.getTitle()}</title>
     <style type="text/css">
       body {
       font-size: 1.5em;
@@ -18,7 +18,7 @@
   </head>
     <body>
       <#list document.getBlocks() as p>
-	<p>${p?html}</p>
+	<p>${p}</p>
       </#list>  
     </body>
 </html>

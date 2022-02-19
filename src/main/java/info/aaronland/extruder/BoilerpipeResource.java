@@ -7,9 +7,9 @@ import info.aaronland.extruder.DocumentView;
 import java.io.InputStream;
 import java.io.File;
 
-import com.sun.jersey.core.header.FormDataContentDisposition;
-import com.sun.jersey.multipart.FormDataMultiPart;
-import com.sun.jersey.multipart.FormDataBodyPart;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataMultiPart;
+import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import javax.ws.rs.core.MediaType;
 
 import javax.ws.rs.GET;

@@ -12,9 +12,10 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ByteArrayInputStream;
 
-import com.sun.jersey.core.header.FormDataContentDisposition;
-import com.sun.jersey.multipart.FormDataMultiPart;
-import com.sun.jersey.multipart.FormDataBodyPart;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+// import org.glassfish.jersey.media.multipart.FormDataMultiPart;
+import org.glassfish.jersey.media.multipart.FormDataBodyPart;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -35,6 +36,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.apache.tika.exception.TikaException;
+import org.apache.tika.metadata.TikaCoreProperties;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;
 import org.apache.tika.parser.ParseContext;
@@ -49,7 +51,7 @@ import org.apache.commons.io.FilenameUtils;
 public class TikaResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TikaResource.class);
-
+    
     @GET
     public Response extrudeThisUrl(@QueryParam("url") String uri){
 
@@ -87,14 +89,11 @@ public class TikaResource {
 
 	return Response.status(Response.Status.OK).entity(view).build();
     }
-
+    
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response extrudeThisFile(FormDataMultiPart formParams){
-
-	FormDataBodyPart stream = formParams.getField("file");
-	InputStream upload = stream.getValueAs(InputStream.class);
-
+    public Response extrudeThisFile(@FormDataParam("file") InputStream upload) {
+	
 	// MOON LANGUAGE – if there's a better way to make it so that
 	// Tika doesn't complain that the stream (upload) is already
 	// closed I would love to hear about it... (20130831/straup)
@@ -144,7 +143,7 @@ public class TikaResource {
     // (20130901/straup)
 
     private Document extrudeThis(InputStream buffer){
-
+	    
 	String text;
 	String title;
 
@@ -165,15 +164,14 @@ public class TikaResource {
 	text = handler.toString();
 	text = unwrapText(text);
 
-	// http://www.celinio.net/techblog/?p=1295
-	title = metadata.get(Metadata.TITLE);
+	title = metadata.get(TikaCoreProperties.TITLE);
 
 	if (title == null){
 
 	    String type = "mystery";
 
 	    try {
-		String content_type = metadata.get(Metadata.CONTENT_TYPE);
+		String content_type = metadata.get(TikaCoreProperties.CONTENT_TYPE_HINT);
 		String[] parts = content_type.split("/");	    
 		type = parts[1];
 	    }

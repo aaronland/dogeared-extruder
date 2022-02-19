@@ -5,16 +5,12 @@ This is a meant to be a simple HTTP Pony to wrap the `boilerpipe` and `Tika` and
 clones of the `readability` text extraction libraries using the `dropwizard`
 framework.
 
-Important
+Version "2"
 --
 
 This package was not updated between May 2014 and February 2022.
 
-There is a [v2 branch](https://github.com/aaronland/dogeared-extruder/tree/v2) for this package with up-to-date dependencies.
-Unfortunately, some of those dependencies contain changes that need to be accounted for in this package's code. That
-work is underway. Any help or suggestions would be appreciated.
-
-In the meantime, known security vulnerabilities for older dependencies have been addressed.
+In February 2022 "version 2" was released which introduces no new user-facing features but updated the internal code, where necessary, to account for updated dependencies and known security vulnerabilities.
 
 Quick start
 --
@@ -24,7 +20,7 @@ To start the server:
 	$> cd dogeared-extruder
 	$> make build
 	... JAVA STUFF ...
-	$> java -jar target/extruder-1.1.jar server
+	$> java -jar target/extruder-2.0.jar server
 	... MOAR JAVA STUFF ...
 	INFO  [2013-08-30 12:49:12,184] org.eclipse.jetty.server.AbstractConnector: Started InstrumentedBlockingChannelConnector@0.0.0.0:8080
 	INFO  [2013-08-30 12:49:12,189] org.eclipse.jetty.server.AbstractConnector: Started SocketConnector@0.0.0.0:8081

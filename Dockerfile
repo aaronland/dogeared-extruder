@@ -28,4 +28,4 @@ FROM openjdk:17-slim
 
 RUN mkdir /usr/local/jar
 
-COPY --from=builder /usr/src/dogeared-extruder/target/extruder-1.1.jar /usr/local/jar/dogeared-extruder.jar
+COPY --from=builder /usr/src/dogeared-extruder/target/extruder-2.0.jar /usr/local/jar/dogeared-extruder.jar
