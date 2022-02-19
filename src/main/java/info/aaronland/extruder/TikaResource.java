@@ -15,6 +15,7 @@ import java.io.ByteArrayInputStream;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -93,6 +94,8 @@ public class TikaResource {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response extrudeThisFile(FormDataMultiPart formParams){
 
+	// public Response extrudeThisFile(@FormDataParam("file") InputStream upload) {
+	
 	FormDataBodyPart stream = formParams.getField("file");
 	InputStream upload = stream.getValueAs(InputStream.class);
 

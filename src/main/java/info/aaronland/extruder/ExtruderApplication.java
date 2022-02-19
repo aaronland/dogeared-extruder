@@ -4,6 +4,7 @@ import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
+import io.dropwizard.forms.MultiPartBundle;
 
 import info.aaronland.extruder.ExtruderConfiguration;
 
@@ -16,8 +17,9 @@ public class ExtruderApplication extends Application<ExtruderConfiguration> {
         new ExtruderApplication().run(args);
     }
 
-    
     public void initialize(Bootstrap<ExtruderConfiguration> bootstrap) {
+	
+	bootstrap.addBundle(new MultiPartBundle());
 	
 	bootstrap.addBundle(new ViewBundle<ExtruderConfiguration>(){
 
