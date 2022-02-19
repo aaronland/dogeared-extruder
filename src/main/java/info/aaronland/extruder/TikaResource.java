@@ -13,7 +13,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.ByteArrayInputStream;
 
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
-import org.glassfish.jersey.media.multipart.FormDataMultiPart;
+// import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
@@ -89,16 +89,11 @@ public class TikaResource {
 
 	return Response.status(Response.Status.OK).entity(view).build();
     }
-
+    
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response extrudeThisFile(FormDataMultiPart formParams){
-
-	// public Response extrudeThisFile(@FormDataParam("file") InputStream upload) {
+    public Response extrudeThisFile(@FormDataParam("file") InputStream upload) {
 	
-	FormDataBodyPart stream = formParams.getField("file");
-	InputStream upload = stream.getValueAs(InputStream.class);
-
 	// MOON LANGUAGE – if there's a better way to make it so that
 	// Tika doesn't complain that the stream (upload) is already
 	// closed I would love to hear about it... (20130831/straup)
