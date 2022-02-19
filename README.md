@@ -10,7 +10,7 @@ Version "2"
 
 This package was not updated between May 2014 and February 2022.
 
-In February 2022 "version 2" was released which introduces no new user-facing features but updated the internal code, where necessary, to account for updated dependencies and known security vulnerabilities.
+In February 2022 "version 2" was released which introduces no new user-facing features but update the internal code, where necessary, to account for changes to its dependencies and to address known security vulnerabilities.
 
 Quick start
 --
