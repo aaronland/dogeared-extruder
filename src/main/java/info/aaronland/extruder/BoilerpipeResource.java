@@ -9,7 +9,7 @@ import java.io.File;
 
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
-import org.glassfish.jersey.media.multipart.FormDataBodyPart;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 import javax.ws.rs.core.MediaType;
 
 import javax.ws.rs.GET;
@@ -63,10 +63,7 @@ public class BoilerpipeResource {
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response extrudeThisFile(FormDataMultiPart formParams){
-
-	FormDataBodyPart stream = formParams.getField("file");
-	InputStream input = stream.getValueAs(InputStream.class);
+    public Response extrudeThisFile(@FormDataParam("file") InputStream input){
 
 	Upload upload = new Upload();
 	File tmpfile = upload.writeTmpFile(input);
