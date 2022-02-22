@@ -28,4 +28,6 @@ FROM openjdk:17-slim
 
 RUN mkdir /usr/local/jar
 
-COPY --from=builder /usr/src/dogeared-extruder/target/extruder-2.0.jar /usr/local/jar/dogeared-extruder.jar
+# TO DO: derive version number from pom.xml...
+
+COPY --from=builder /usr/src/dogeared-extruder/target/extruder-2.0.1.jar /usr/local/jar/dogeared-extruder.jar
