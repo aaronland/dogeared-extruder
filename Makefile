@@ -7,7 +7,7 @@ build: todo
 	mvn install
 
 run:
-	java -jar target/extruder-2.0.1.jar server
+	java -jar target/extruder-2.0.3.jar server
 
 todo:
 	echo "# Generated automatically at" `date` > TODO.txt
